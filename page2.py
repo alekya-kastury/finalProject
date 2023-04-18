@@ -13,8 +13,8 @@ engine = create_engine(URL(
     account = 'jw32137.us-east-2',
     user = 'ALEKYAKASTURY',
     password = '@Noon1240',
-    database = 'CUSTOMER',
-    schema = 'PUBLIC',
+    database = 'SNOWFLAKE_SAMPLE_DATA',
+    schema = 'TPCDS_SF10TCL',
     warehouse = 'compute_wh'
 ))
 
