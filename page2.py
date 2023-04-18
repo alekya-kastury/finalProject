@@ -18,7 +18,10 @@ engine = create_engine(URL(
     warehouse = 'compute_wh'
 ))
 
-
+st.set_page_config(
+    page_title="Hello",
+    page_icon="👋",
+)
 st.write ("Welcome")
 query="""SELECT * FROM CUSTOMER LIMIT 1;"""
 df=pd.read_sql_query(query,engine)
