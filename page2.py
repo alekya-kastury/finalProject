@@ -13,12 +13,11 @@ engine = create_engine(URL(
     account = 'dl84836.us-east-2',
     user = 'ALEKYAKASTURY',
     password = '@Noon1240',
-    database = 'SNOWFLAKE_SAMPLE_DATA',
-    schema = 'TPCDS_SF10TCL',
+    database = 'CUSTOMER',
+    schema = 'PUBLIC',
     warehouse = 'compute_wh'
 ))
 
-connection = engine.connect()
 
 st.write ("Welcome")
 query="""SELECT * FROM CUSTOMER LIMIT 1;"""
