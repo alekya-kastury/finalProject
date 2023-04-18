@@ -18,7 +18,7 @@ engine = create_engine(URL(
     warehouse = 'compute_wh'
 ))
 
-
+connection = engine.connect()
 
 st.write ("Welcome")
 query="""SELECT * FROM CUSTOMER LIMIT 1;"""
