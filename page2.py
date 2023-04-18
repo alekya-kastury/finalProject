@@ -14,7 +14,7 @@ engine = create_engine(URL(
     user = 'ALEKYAKASTURY',
     password = '@Noon1240',
     database = 'CUSTOMER',
-    schema = 'public',
+    schema = 'PUBLIC',
     warehouse = 'compute_wh'
 ))
 
