@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 #trying chemy
 engine = create_engine(URL(
-    account = 'dl84836.us-east-2',
+    account = 'dl84836.us-east-2.aws',
     user = 'alekyakastury',
     password = '@Noon1240',
     database = 'CUSTOMER',
