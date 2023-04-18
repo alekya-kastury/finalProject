@@ -22,4 +22,6 @@ engine = create_engine(URL(
 
 st.write ("Welcome")
 
+df=pd.read_sql_query("SELECT * FROM CUSTOMER LIMIT 1",engine)
+st.write(df)
 
