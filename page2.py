@@ -1,22 +1,25 @@
 import streamlit as st
+import plotly.graph_objs as go
 import pandas as pd
+import numpy as np
+import datetime as dt
+import snowflake.connector as sf
 from sqlalchemy import create_engine
 from snowflake.sqlalchemy import URL
+import matplotlib.pyplot as plt
+
+#trying chemy
+engine = create_engine(URL(
+    account = 'dl84836.us-east-2',
+    user = 'ALEKYAKASTURY',
+    password = '@Noon1240',
+    database = 'CUSTOMER',
+    schema = 'public',
+    warehouse = 'compute_wh'
+))
+
+
 
 st.write ("Welcome")
 
 
-engine = create_engine(URL(
-    account = 'mgvioku-jw32137',
-    user = 'alekyakastury',
-    password = '@Noon1240',
-    database = 'CUSTOMER',
-    schema = 'public',
-    warehouse = 'COMPUTE_WH',
-    role='ACCOUNTADMIN',
-))
-connection = engine.connect()
-try:
-    st.write(connection.execute('SELECT * FROM CUSTOMER LIMIT 1'))
-finally:
-    connection.close()
