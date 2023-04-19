@@ -130,9 +130,9 @@ with st.beta_container():
     # Create two columns for the metrics
     col1, col2, col3, col4 = st.beta_columns(4)
     with col1:
-        st.metric(label="Revenue", value=shorten_num(revenue_current),delta=round(percentage,1))
+        st.metric(label="Revenue", value=shorten_num(revenue_current),delta=str(round(percentage,1))+'%')
     with col2:
-        st.metric('Number of Customers', shorten_num(no_of_customers),delta=round(percentage_cust,1))
+        st.metric('Number of Customers', shorten_num(no_of_customers),delta=str(round(percentage_cust,1))+'%')
     with col3:
         st.metric('Repeat Purchase Rate', '300')
     with col4:
