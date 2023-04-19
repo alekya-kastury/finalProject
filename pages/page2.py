@@ -39,7 +39,7 @@ month = st.sidebar.selectbox('Month', [1,2,3,4,5,6,7,8,9,10,11,12])
 
 query="""SELECT SUM(SS_NET_PAID) as sales
 FROM 
-STORE_SALES SS INNER JOIN DATE_DIM DD
+STORE_SALES_NEW SS INNER JOIN DATE_DIM DD
 ON
 SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
 WHERE 
@@ -50,6 +50,6 @@ DD.D_YEAR, DD.D_MOY""".format(year,month)
 
 df=pd.read_sql_query(query,engine)
 #st.write (df)
-st.metric(label="Total Sales per Month", value=numerize(df['sales']), delta=None, delta_color="normal", help=None, label_visibility="visible")
+st.metric(label="Total Sales per Month", value=df['sales'], delta=None, delta_color="normal", help=None, label_visibility="visible")
 
 
