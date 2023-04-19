@@ -8,7 +8,7 @@ def page1():
     st.write('Click on the image to go to Page 2')
     image = st.image('https://www.pixelstalk.net/wp-content/uploads/images6/Aesthetic-Cloud-Backgrounds-Free-Download.jpg', use_column_width=True)
     url = 'https://alekya-kastury-finalproject-pagespage2-xmu4hr.streamlit.app/'
-    image.markdown(f'<a href="{url}">{image._repr_html_()}</a>', unsafe_allow_html=True)
+    
 
 def page2():
     st.title('Page 2')
