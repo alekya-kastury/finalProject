@@ -29,6 +29,7 @@ year = st.sidebar.selectbox('Year', [1998,1999,2000,2001,2002])
 
 # create a dropdown for the year parameter with the distinct state values
 month = st.sidebar.selectbox('Month', [1,2,3,4,5,6,7,8,9,10,11,12])
+
 @st.cache
 def shorten_num(number):    
     if number >= 1000000000:
@@ -42,47 +43,48 @@ def shorten_num(number):
     return shortened_num
 
 #####################################################BLOCK 1##############################################
-
-query="""SELECT SUM(SS_NET_PAID) as sales
-FROM 
-STORE_SALES SS INNER JOIN DATE_DIM DD
-ON
-SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
-WHERE 
-DD.D_YEAR={} and
-DD.D_MOY={}
-group by 
-DD.D_YEAR, DD.D_MOY""".format(year,month)
-
-df_rev_current=pd.read_sql_query(query,engine)
-revenue_current=df_rev_current['sales'][0]
-
-
-if year==1998 and month==1:
-    percentage=100
-elif month==1:
-    prev_year=year-1
-    prev_month=12
-    
-    query="""SELECT SUM(SS_NET_PAID) as sales FROM 
+@st.cache
+def block1();
+    query="""SELECT SUM(SS_NET_PAID) as sales
+    FROM 
     STORE_SALES SS INNER JOIN DATE_DIM DD
-    ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
-    WHERE DD.D_YEAR={} and DD.D_MOY={}
-    group by DD.D_YEAR, DD.D_MOY""".format(prev_year,prev_month)
-    
-else:
-    prev_month=month-1
-    
-    query="""SELECT SUM(SS_NET_PAID) as sales FROM 
-    STORE_SALES SS INNER JOIN DATE_DIM DD
-    ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
-    WHERE DD.D_YEAR={} and DD.D_MOY={}
-    group by DD.D_YEAR, DD.D_MOY""".format(year,prev_month)
-    
-df_rev_prev=pd.read_sql_query(query,engine)
-revenue_prev=df_rev_prev['sales'][0]
+    ON
+    SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
+    WHERE 
+    DD.D_YEAR={} and
+    DD.D_MOY={}
+    group by 
+    DD.D_YEAR, DD.D_MOY""".format(year,month)
 
-percentage=((revenue_current-revenue_prev)/revenue_prev)*100
+    df_rev_current=pd.read_sql_query(query,engine)
+    revenue_current=df_rev_current['sales'][0]
+
+
+    if year==1998 and month==1:
+        percentage=100
+    elif month==1:
+        prev_year=year-1
+        prev_month=12
+    
+        query="""SELECT SUM(SS_NET_PAID) as sales FROM 
+        STORE_SALES SS INNER JOIN DATE_DIM DD
+        ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
+        WHERE DD.D_YEAR={} and DD.D_MOY={}
+        group by DD.D_YEAR, DD.D_MOY""".format(prev_year,prev_month)
+    
+    else:
+        prev_month=month-1
+    
+        query="""SELECT SUM(SS_NET_PAID) as sales FROM 
+        STORE_SALES SS INNER JOIN DATE_DIM DD
+        ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
+        WHERE DD.D_YEAR={} and DD.D_MOY={}
+        group by DD.D_YEAR, DD.D_MOY""".format(year,prev_month)
+    
+    df_rev_prev=pd.read_sql_query(query,engine)
+    revenue_prev=df_rev_prev['sales'][0]
+
+    percentage=((revenue_current-revenue_prev)/revenue_prev)*100
 
 
 ###########################################################################################################
