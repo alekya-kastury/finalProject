@@ -150,4 +150,4 @@ with st.beta_container():
     with col2:
         st.metric('Number of Customers', shorten_num(no_of_customers),delta=str(round(percentage_cust,1))+'%')
     with col3:
-        st.metric('Returning customers', percentage_ret_customers) 
+        st.metric('Returning customers', str(round(percentage_ret_customers,1))+'%') 
