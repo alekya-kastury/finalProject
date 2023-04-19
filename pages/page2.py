@@ -53,7 +53,7 @@ DD.D_YEAR, DD.D_MOY""".format(year,month)
 df=pd.read_sql_query(query,engine)
 #st.write (df)
 
-val=df['sales']
+val=df['sales'][0]
 
 def shorten_num(number):    
     if number >= 1000000000:
