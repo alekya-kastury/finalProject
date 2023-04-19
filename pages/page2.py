@@ -30,6 +30,17 @@ year = st.sidebar.selectbox('Year', [1998,1999,2000,2001,2002])
 # create a dropdown for the year parameter with the distinct state values
 month = st.sidebar.selectbox('Month', [1,2,3,4,5,6,7,8,9,10,11,12])
 
+def shorten_num(number):    
+    if number >= 1000000000:
+        shortened_num = str(round(number/1000000000, 1)) + "B"
+    elif number >= 1000000:
+        shortened_num = str(round(number/1000000, 1)) + "M"
+    elif number >= 1000:
+        shortened_num = str(round(number/1000, 1)) + "K"
+    else:
+        shortened_num = str(number)
+    return shortened_num
+
 #####################################################BLOCK 1##############################################
 
 query="""SELECT SUM(SS_NET_PAID) as sales
@@ -73,24 +84,16 @@ revenue_prev=df_rev_prev['sales'][0]
 
 percentage=((revenue_current-revenue_prev)/revenue_prev)*100
 
-def shorten_num(number):    
-    if number >= 1000000000:
-        shortened_num = str(round(number/1000000000, 1)) + "B"
-    elif number >= 1000000:
-        shortened_num = str(round(number/1000000, 1)) + "M"
-    elif number >= 1000:
-        shortened_num = str(round(number/1000, 1)) + "K"
-    else:
-        shortened_num = str(number)
-    return shortened_num
+
 ###########################################################################################################
 
 
 #################################BLOCK 2##################################################
-query="""SELECT COUNT(SS_CUSTOMER_SK) as no_of_customers
+query="""SELECT SS_CUSTOMER_SK,count(1) as no_of_customers
 FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON
 SS.SS_SOLD_DATE_SK=DD.D_DATE_SK 
-WHERE DD.D_YEAR={} AND DD.D_MOY={};""".format(year,month)
+WHERE DD.D_YEAR={} AND DD.D_MOY={}
+group by SS_CUSTOMER_SK;""".format(year,month)
     
 df_no_of_cust=pd.read_sql_query(query,engine)
 no_of_customers=df_no_of_cust['no_of_customers'][0]
@@ -105,7 +108,7 @@ with st.beta_container():
     with col1:
         st.metric(label="Revenue", value=shorten_num(revenue_current),delta=round(percentage,1))
     with col2:
-        st.metric('New Customers', no_of_customers)
+        st.metric('Number of Customers', shorten_num(no_of_customers))
     with col3:
         st.metric('Repeat Purchase Rate', '300')
     with col4:
