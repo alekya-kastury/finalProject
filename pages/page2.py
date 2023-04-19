@@ -53,7 +53,9 @@ SS.SS_SOLD_DATE_SK=DD.D_DATE_SK WHERE
 DD.D_YEAR={} and DD.D_MOY={} group by 
 DD.D_YEAR, DD.D_MOY""".format(year,month)
 
-revenue_current=run_query(query)
+df=pd.read_sql_query(query,engine)
+st.write(df[0][0])
+#revenue_current=run_query(query)
 
 if year==1998 and month==1:
     percentage=100
