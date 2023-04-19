@@ -87,29 +87,13 @@ def shorten_num(number):
 
 
 #################################BLOCK 2##################################################
-if year==1998 and month==1:
-    no_of_cust=0
-elif month==1:
-    prev_year=year-1
-    prev_month=12
-    
-    query="""SELECT COUNT(SS_CUSTOMER_SK) as no_of_customers
-    FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON
-    SS.SS_SOLD_DATE_SK=DD.D_DATE_SK 
-    WHERE DD.D_YEAR={} AND DD.D_MOY={};""".format(year,month)
-    
-else:
-    prev_month=month-1
-    
-    query="""SELECT COUNT(SS_CUSTOMER_SK) as no_of_customers
-    FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON
-    SS.SS_SOLD_DATE_SK=DD.D_DATE_SK 
-    WHERE DD.D_YEAR={} AND DD.D_MOY={};
-    """.format(year,month)
+query="""SELECT COUNT(SS_CUSTOMER_SK) as no_of_customers
+FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON
+SS.SS_SOLD_DATE_SK=DD.D_DATE_SK 
+WHERE DD.D_YEAR={} AND DD.D_MOY={};""".format(year,month)
     
 df_no_of_cust=pd.read_sql_query(query,engine)
 no_of_customers=df_no_of_cust['no_of_customers'][0]
-
 
 ###########################################################################################
 
