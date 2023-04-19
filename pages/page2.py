@@ -118,7 +118,7 @@ percentage_cust=((no_of_customers-no_of_customers_prev)/no_of_customers_prev)*10
 
 ###########################################################################################
 ##############################BLOCK 3####################################################
-query="""SELECT count(SS_CUSTOMER_SK) AS C
+query="""SELECT count(SS_CUSTOMER_SK) AS ret
 FROM (
   SELECT SS_CUSTOMER_SK, COUNT(*) AS count
   FROM STORE_SALES SS INNER JOIN DATE_DIM DD
@@ -127,7 +127,7 @@ FROM (
   GROUP BY SS_CUSTOMER_SK
 ) S WHERE count>1 ;""".format(year,month)
 
-ret_customers=run_query(query,'C')         
+ret_customers=run_query(query,'ret')         
 
 query="""SELECT count(SS_CUSTOMER_SK) AS total
 FROM (
