@@ -43,7 +43,7 @@ distinct_month = pd.read_sql_query(distinct_month_query, engine)['d_moy'].tolist
 month = st.sidebar.selectbox('Month', distinct_month)
 
 
-query="""SELECT SUM(SS_NET_PAID) 
+query="""SELECT SUM(SS_NET_PAID) as sales
 FROM 
 STORE_SALES_NEW SS INNER JOIN DATE_DIM DD
 ON
@@ -55,4 +55,6 @@ group by
 DD.D_YEAR, DD.D_MOY""".format(year,month)
 
 df=pd.read_sql_query(query,engine)
-st.write(df)
+st.metric(label="Total Sales per Month", value=df[sales], delta=None, delta_color="normal", help=None, label_visibility="visible")
+
+
