@@ -75,7 +75,8 @@ else:
     group by DD.D_YEAR, DD.D_MOY""".format(year,prev_month)
     
 df_rev_prev=pd.read_sql_query(query,engine)
-revenue_prev=st.cache(df_rev_prev['sales'][0])
+df_rev_prev_cached=st.cache(df_rev_prev)
+revenue_prev=df_rev_prev_cached['sales'][0]
 percentage=((revenue_current-revenue_prev)/revenue_prev)*100
 
 
