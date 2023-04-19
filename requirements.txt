@@ -17,4 +17,4 @@ datetime
 snowflake-connector-python
 snowflake-sqlalchemy
 altair
-st_clickable_images
+st-clickable-images==0.0.3
