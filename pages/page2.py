@@ -46,7 +46,10 @@ df_rev_current=pd.read_sql_query(query,engine)
 revenue_current=df_rev_current['sales'][0]
 
 
-if month==1:
+if year==1998 and month==1:
+    percentage=100
+elif month==1:
+    prev_year=year-1
     prev_month=12
 else:
     prev_month=month-1
@@ -60,7 +63,7 @@ WHERE
 DD.D_YEAR={} and
 DD.D_MOY={}
 group by 
-DD.D_YEAR, DD.D_MOY""".format(year,prev_month)
+DD.D_YEAR, DD.D_MOY""".format(prev_year,prev_month)
 
 df_rev_prev=pd.read_sql_query(query,engine)
 revenue_prev=df_rev_prev['sales'][0]
