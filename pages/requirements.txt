@@ -18,3 +18,4 @@ snowflake-connector-python
 snowflake-sqlalchemy
 altair
 st-clickable-images==0.0.3
+humanize
