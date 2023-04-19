@@ -13,7 +13,7 @@ clicked = clickable_images(
     div_style={"display": "flex", "justify-content": "center", "flex-wrap": "wrap"},
     img_style={"margin": "5px", "height": "200px"},
 )
-
-st.markdown(f"Image #{clicked} clicked" if clicked > -1 else "No image clicked")
+url="https://alekya-kastury-finalproject-pagespage2-xmu4hr.streamlit.app/"
+st.markdown(f"Image #{url}" if clicked > -1 else "No image clicked")
 
 
