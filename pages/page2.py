@@ -54,7 +54,7 @@ DD.D_YEAR={} and DD.D_MOY={} group by
 DD.D_YEAR, DD.D_MOY""".format(year,month)
 
 df=pd.read_sql_query(query,engine)
-st.write(df[0][0])
+st.write(df['sales'][0])
 #revenue_current=run_query(query)
 
 if year==1998 and month==1:
