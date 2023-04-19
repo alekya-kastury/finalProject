@@ -1,9 +1,8 @@
 import streamlit as st
 from st_clickable_images import clickable_images
-st.set_page_config(page_title="Plotting Demo", page_icon="📈")
 
-st.markdown("# Plotting Demo")
-st.sidebar.header("Plotting Demo")
+st.sidebar.success("Select a demo above.")
+
 clicked = clickable_images(
     [
         "https://images.unsplash.com/photo-1565130838609-c3a86655db61?w=700",
@@ -18,3 +17,5 @@ clicked = clickable_images(
 )
 
 st.markdown(f"Image #{clicked} clicked" if clicked > -1 else "No image clicked")
+
+
