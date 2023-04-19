@@ -118,27 +118,16 @@ percentage_cust=((no_of_customers-no_of_customers_prev)/no_of_customers_prev)*10
 
 ###########################################################################################
 ##############################BLOCK 3####################################################
-if year==1998 and month==1:
-    ret_customers=0
-elif month==1:
-    prev_year=year-1
-    prev_month=12
-    query="""SELECT
-    (COUNT(DISTINCT SS_CUSTOMER_SK) - COUNT(DISTINCT CASE WHEN DD.D_YEAR = {} AND DD.D_MOY={} THEN SS_CUSTOMER_SK END)) * 100.0
-    / COUNT(DISTINCT CASE WHEN DD.D_YEAR = {} AND DD.D_MOY={} THEN SS_CUSTOMER_SK END) as returning_customers_percentage
-    FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
-    WHERE DD.D_YEAR = {} AND DD.D_MOY={};""".format(prev_year,prev_month,prev_year,prev_month,year,month)
-    #df_ret_cust=pd.read_sql_query(query,engine)
-    ret_customers=run_query(query,'returning_customers_percentage')    
-else:
-    prev_month=month-1
-    query="""SELECT
-    (COUNT(DISTINCT SS_CUSTOMER_SK) - COUNT(DISTINCT CASE WHEN DD.D_YEAR = {} AND DD.D_MOY={} THEN SS_CUSTOMER_SK END)) * 100.0
-    / COUNT(DISTINCT CASE WHEN DD.D_YEAR = {} AND DD.D_MOY={} THEN SS_CUSTOMER_SK END) as returning_customers_percentage
-    FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
-    WHERE DD.D_YEAR = {} AND DD.D_MOY={};""".format(year,prev_month,year,prev_month,year,month)
-    #df_ret_cust=pd.read_sql_query(query,engine)
-    ret_customers=run_query(query,'returning_customers_percentage')      
+query="""SELECT (COUNT(DISTINCT SS_CUSTOMER_SK) FILTER (WHERE count >= 2)::FLOAT / COUNT(DISTINCT SS_CUSTOMER_SK)::FLOAT) * 100 AS percentage_returning_customers
+FROM (
+  SELECT SS_CUSTOMER_SK, COUNT(*) AS count
+  FROM STORE_SALES SS INNER JOIN DATE_DIM DD
+ ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
+    WHERE DD.D_YEAR={} and DD.D_MOY={}
+  GROUP BY SS_CUSTOMER_SK
+) S;""".format(year,month)
+
+ret_customers=run_query(query,'percentage_returning_customers')         
     
 #########################################################################################
 # Create a container for the metrics
