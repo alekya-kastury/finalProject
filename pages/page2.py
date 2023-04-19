@@ -30,7 +30,7 @@ year = st.sidebar.selectbox('Year', [1998,1999,2000,2001,2002])
 # create a dropdown for the year parameter with the distinct state values
 month = st.sidebar.selectbox('Month', [1,2,3,4,5,6,7,8,9,10,11,12])
 
-@st.cache
+@st.cache_data
 def shorten_num(number):    
     if number >= 1000000000:
         shortened_num = str(round(number/1000000000, 1)) + "B"
@@ -43,7 +43,7 @@ def shorten_num(number):
     return shortened_num
 
 #####################################################BLOCK 1##############################################
-
+@st.cache_data
 query="""SELECT SUM(SS_NET_PAID) as sales FROM 
 STORE_SALES SS INNER JOIN DATE_DIM DD ON
 SS.SS_SOLD_DATE_SK=DD.D_DATE_SKWHERE 
@@ -75,8 +75,7 @@ else:
     group by DD.D_YEAR, DD.D_MOY""".format(year,prev_month)
     
 df_rev_prev=pd.read_sql_query(query,engine)
-df_rev_prev_cached=st.cache(df_rev_prev)
-revenue_prev=df_rev_prev_cached['sales'][0]
+revenue_prev=df_rev_prev['sales'][0]
 percentage=((revenue_current-revenue_prev)/revenue_prev)*100
 
 
