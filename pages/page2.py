@@ -58,7 +58,7 @@ val=df['sales']
 def shorten_num(number):
     suffixes = {"K": 1000, "M": 1000000, "B": 1000000000}
 
-    for suffix, dividing_factor in suffixes.items():
+    for suffix, dividing_factor in suffixes:
         if number >= dividing_factor:
             shortened_num = str(round(number/dividing_factor, 1)) + suffix
             break
