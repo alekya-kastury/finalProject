@@ -30,7 +30,7 @@ SS.SS_SOLD_DATE_SK=DD.D_DATE_SK;"""
 distinct_year = pd.read_sql_query(distinct_year_query, engine)['d_year'].tolist()
 
 # create a dropdown for the year parameter with the distinct state values
-year = st.selectbox('Year', distinct_year)
+year = st.sidebar.selectbox('Year', distinct_year)
 
 # get the distinct year from the database
 
@@ -40,7 +40,7 @@ SS.SS_SOLD_DATE_SK=DD.D_DATE_SK;"""
 distinct_month = pd.read_sql_query(distinct_month_query, engine)['d_moy'].tolist()
 
 # create a dropdown for the year parameter with the distinct state values
-month = st.selectbox('Year', distinct_month)
+month = st.sidebar.selectbox('Month', distinct_month)
 
 
 query="""SELECT SUM(SS_NET_PAID) 
