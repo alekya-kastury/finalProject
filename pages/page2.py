@@ -29,7 +29,7 @@ year = st.sidebar.selectbox('Year', [1998,1999,2000,2001,2002])
 
 # create a dropdown for the year parameter with the distinct state values
 month = st.sidebar.selectbox('Month', [1,2,3,4,5,6,7,8,9,10,11,12])
-
+@st.cache
 def shorten_num(number):    
     if number >= 1000000000:
         shortened_num = str(round(number/1000000000, 1)) + "B"
