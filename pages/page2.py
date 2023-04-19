@@ -45,6 +45,12 @@ DD.D_YEAR, DD.D_MOY""".format(year,month)
 df_rev_current=pd.read_sql_query(query,engine)
 revenue_current=df_rev_current['sales'][0]
 
+
+if month==1:
+    prev_month=12
+else:
+    prev_month=month-1
+
 query="""SELECT SUM(SS_NET_PAID) as sales
 FROM 
 STORE_SALES SS INNER JOIN DATE_DIM DD
@@ -52,9 +58,9 @@ ON
 SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
 WHERE 
 DD.D_YEAR={} and
-DD.D_MOY={}-1
+DD.D_MOY={}
 group by 
-DD.D_YEAR, DD.D_MOY""".format(year,month)
+DD.D_YEAR, DD.D_MOY""".format(year,prev_month)
 
 df_rev_prev=pd.read_sql_query(query,engine)
 revenue_prev=df_rev_prev['sales'][0]
