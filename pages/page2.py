@@ -96,12 +96,7 @@ elif month==1:
     query="""SELECT COUNT(SS_CUSTOMER_SK) as no_of_customers
     FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON
     SS.SS_SOLD_DATE_SK=DD.D_DATE_SK 
-    WHERE DD.D_YEAR={} AND DD.D_MOY={}
-    AND SS_CUSTOMER_SK NOT IN 
-    (
-    SELECT DISTINCT SS_CUSTOMER_SK FROM STORE_SALES WHERE SS_SOLD_DATE_SK IN
-    (SELECT D_DATE_SK FROM DATE_DIM HAVING D_YEAR BETWEEN (SELECT MIN(D_YEAR) FROM DATE_DIM) AND D_YEAR={})
-    );""".format(year,month,prev_year)
+    WHERE DD.D_YEAR={} AND DD.D_MOY={};""".format(year,month)
     
 else:
     prev_month=month-1
@@ -109,12 +104,8 @@ else:
     query="""SELECT COUNT(SS_CUSTOMER_SK) as no_of_customers
     FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON
     SS.SS_SOLD_DATE_SK=DD.D_DATE_SK 
-    WHERE DD.D_YEAR={} AND DD.D_MOY={}
-    AND SS_CUSTOMER_SK NOT IN 
-    (
-    SELECT DISTINCT SS_CUSTOMER_SK FROM STORE_SALES WHERE SS_SOLD_DATE_SK IN
-    (SELECT D_DATE_SK FROM DATE_DIM HAVING D_YEAR BETWEEN (SELECT MIN(D_YEAR) FROM DATE_DIM) AND D_YEAR={})
-    );""".format(year,month,prev_year)
+    WHERE DD.D_YEAR={} AND DD.D_MOY={};
+    """.format(year,month)
     
 df_no_of_cust=pd.read_sql_query(query,engine)
 no_of_customers=df_no_of_cust['no_of_customers'][0]
