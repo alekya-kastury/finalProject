@@ -42,13 +42,18 @@ def shorten_num(number):
     return shortened_num
 
 #####################################################BLOCK 1##############################################
+@st.cache_data
+def run_query(query):
+    df=pd.read_sql_query(query,engine)
+    res=df[0][0]
+    return res
+
 query="""SELECT SUM(SS_NET_PAID) as sales FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON
 SS.SS_SOLD_DATE_SK=DD.D_DATE_SK WHERE 
 DD.D_YEAR={} and DD.D_MOY={} group by 
 DD.D_YEAR, DD.D_MOY""".format(year,month)
 
-df_rev_current=pd.read_sql_query(query,engine)
-revenue_current=df_rev_current['sales'][0]
+revenue_current=run_query(query)
 
 if year==1998 and month==1:
     percentage=100
@@ -70,9 +75,9 @@ else:
     ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
     WHERE DD.D_YEAR={} and DD.D_MOY={}
     group by DD.D_YEAR, DD.D_MOY""".format(year,prev_month)
-    
-df_rev_prev=pd.read_sql_query(query,engine)
-revenue_prev=df_rev_prev['sales'][0]
+
+revenue_prev=run_query(query)
+
 percentage=((revenue_current-revenue_prev)/revenue_prev)*100
 
 
@@ -86,8 +91,7 @@ SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
 WHERE DD.D_YEAR={} AND DD.D_MOY={}
 group by DD.D_YEAR, DD.D_MOY;""".format(year,month)
 
-df_no_of_cust=pd.read_sql_query(query,engine)
-no_of_customers=df_no_of_cust['no_of_customers'][0]
+no_of_customers=run_query(query)
 
 if year==1998 and month==1:
     percentage_cust=100
@@ -108,8 +112,7 @@ else:
     WHERE DD.D_YEAR={} AND DD.D_MOY={}
     group by DD.D_YEAR, DD.D_MOY;""".format(year,prev_month)
 
-df_no_of_cust_prev=pd.read_sql_query(query,engine)
-no_of_customers_prev=df_no_of_cust_prev['no_of_customers'][0]    
+no_of_customers_prev=run_query(query)
 
 percentage_cust=((no_of_customers-no_of_customers_prev)/no_of_customers_prev)*100
 
