@@ -15,7 +15,7 @@ pages = {
 }
 
 # Create a sidebar menu with radio buttons
-selection = st.sidebar.radio("Go to", list(pages.keys()))
+selection = st.sidebar.selectbox("Go to", list(pages.keys()))
 
 # Call the appropriate page function based on the user's selection
 pages[selection]()
