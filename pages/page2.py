@@ -118,17 +118,28 @@ percentage_cust=((no_of_customers-no_of_customers_prev)/no_of_customers_prev)*10
 
 ###########################################################################################
 ##############################BLOCK 3####################################################
-query="""SELECT (COUNT(DISTINCT SS_CUSTOMER_SK) FILTER (WHERE count >= 2)::FLOAT / COUNT(DISTINCT SS_CUSTOMER_SK)::FLOAT) * 100 AS percentage_returning_customers
+query="""SELECT count(SS_CUSTOMER_SK) AS C
 FROM (
   SELECT SS_CUSTOMER_SK, COUNT(*) AS count
   FROM STORE_SALES SS INNER JOIN DATE_DIM DD
  ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
-    WHERE DD.D_YEAR={} and DD.D_MOY={}
+   WHERE DD.D_YEAR=1998 and DD.D_MOY=1
   GROUP BY SS_CUSTOMER_SK
-) S;""".format(year,month)
+) S WHERE count>1 ;""".format(year,month)
 
-ret_customers=run_query(query,'percentage_returning_customers')         
-    
+ret_customers=run_query(query,'C')         
+
+query="""SELECT count(SS_CUSTOMER_SK) AS C
+FROM (
+  SELECT SS_CUSTOMER_SK
+  FROM STORE_SALES SS INNER JOIN DATE_DIM DD
+ ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
+   WHERE DD.D_YEAR=1998 and DD.D_MOY=1
+) S ;""".format(year,month)
+
+total_customers=run_query(query,'C')
+
+percentage_ret_customers=ret_customers*100/total_customers
 #########################################################################################
 # Create a container for the metrics
 with st.beta_container():
@@ -139,4 +150,4 @@ with st.beta_container():
     with col2:
         st.metric('Number of Customers', shorten_num(no_of_customers),delta=str(round(percentage_cust,1))+'%')
     with col3:
-        st.metric('Returning customers', ret_customers) 
+        st.metric('Returning customers', percentage_ret_customers) 
