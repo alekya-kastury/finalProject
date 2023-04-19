@@ -158,4 +158,4 @@ with st.beta_container():
     with col3:
         st.metric('Returning Customers', shorten_num(ret_customers))
     with col4:
-        st.metric('Average Order Value', '300')
+        st.metric('Average Order Value', '300') 
