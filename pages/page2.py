@@ -9,7 +9,8 @@ from snowflake.sqlalchemy import URL
 import matplotlib.pyplot as plt
 
 
-
+progress_bar = st.sidebar.progress(0)
+status_text = st.sidebar.empty()
 
 
 #trying chemy
