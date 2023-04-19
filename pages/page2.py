@@ -23,22 +23,18 @@ st.set_page_config(
 )
 
 # get the distinct year from the database
-
-distinct_year_query = """SELECT DISTINCT DD.D_YEAR FROM DATE_DIM DD;"""
-
-distinct_year = pd.read_sql_query(distinct_year_query, engine)['d_year'].tolist()
+#distinct_year_query = """SELECT DISTINCT DD.D_YEAR FROM DATE_DIM DD WHERE DD.D_YEAR IN (1998,1999,2000,2001,2002);"""
+#distinct_year = pd.read_sql_query(distinct_year_query, engine)['d_year'].tolist()
 
 # create a dropdown for the year parameter with the distinct state values
-year = st.sidebar.selectbox('Year', distinct_year)
+year = st.sidebar.selectbox('Year', [1998,1999,2000,2001,2002])
 
 # get the distinct year from the database
-
-distinct_month_query = """SELECT DISTINCT DD.D_MOY FROM DATE_DIM DD;"""
-
-distinct_month = pd.read_sql_query(distinct_month_query, engine)['d_moy'].tolist()
+#distinct_month_query = """SELECT DISTINCT DD.D_MOY FROM DATE_DIM DD;"""
+#distinct_month = pd.read_sql_query(distinct_month_query, engine)['d_moy'].tolist()
 
 # create a dropdown for the year parameter with the distinct state values
-month = st.sidebar.selectbox('Month', distinct_month)
+month = st.sidebar.selectbox('Month', [1,2,3,4,5,6,7,8,9,10,11,12])
 
 
 query="""SELECT SUM(SS_NET_PAID) as sales
