@@ -43,7 +43,7 @@ def shorten_num(number):
     return shortened_num
 
 #####################################################BLOCK 1##############################################
-@st.cache_data
+
 query="""SELECT SUM(SS_NET_PAID) as sales FROM 
 STORE_SALES SS INNER JOIN DATE_DIM DD ON
 SS.SS_SOLD_DATE_SK=DD.D_DATE_SKWHERE 
