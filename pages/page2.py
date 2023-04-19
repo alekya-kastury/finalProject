@@ -55,7 +55,7 @@ df=pd.read_sql_query(query,engine)
 
 val=df['sales']
 
-def shorten_num(num):
+def shorten_num(number):
     suffixes = {"K": 1000, "M": 1000000, "B": 1000000000}
 
     for suffix, dividing_factor in suffixes.items():
