@@ -54,7 +54,6 @@ df=pd.read_sql_query(query,engine)
 #st.write (df)
 
 val=df['sales']
-st.write(humanize.intword(val))
-#st.metric(label="Total Sales per Month", value=millify(val), delta=None, delta_color="normal", help=None, label_visibility="visible")
+st.metric(label="Total Sales per Month", value=humanize.intword(val), delta=None, delta_color="normal", help=None, label_visibility="visible")
 
 
