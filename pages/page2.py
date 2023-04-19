@@ -8,6 +8,13 @@ from sqlalchemy import create_engine
 from snowflake.sqlalchemy import URL
 import matplotlib.pyplot as plt
 
+
+st.set_page_config(page_title="Plotting Demo", page_icon="📈")
+
+st.markdown("# Plotting Demo")
+st.sidebar.header("Plotting Demo")
+
+
 #trying chemy
 engine = create_engine(URL(
     account = 'dl84836.us-east-2.aws',
