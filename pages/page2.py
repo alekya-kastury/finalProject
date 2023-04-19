@@ -24,7 +24,9 @@ st.set_page_config(
 
 # get the distinct year from the database
 
-distinct_year_query = """SELECT DISTINCT D_YEAR FROM DATE_DIM;"""
+distinct_year_query = """SELECT DISTINCT DD.D_YEAR FROM 
+STORE_SALES SS INNER JOIN DATE_DIM DD
+ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK;"""
 distinct_year = pd.read_sql_query(distinct_year_query, engine)['d_year'].tolist()
 
 # create a dropdown for the year parameter with the distinct state values
@@ -32,7 +34,8 @@ year = st.sidebar.selectbox('Year', distinct_year)
 
 # get the distinct year from the database
 
-distinct_month_query = """SELECT DISTINCT D_MOY FROM DATE_DIM"""
+distinct_month_query = """SELECT DISTINCT DD.D_MOY FROM STORE_SALES SS INNER JOIN DATE_DIM DD
+ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK;"""
 distinct_month = pd.read_sql_query(distinct_month_query, engine)['d_moy'].tolist()
 
 # create a dropdown for the year parameter with the distinct state values
