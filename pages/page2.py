@@ -7,7 +7,7 @@ import snowflake.connector as sf
 from sqlalchemy import create_engine
 from snowflake.sqlalchemy import URL
 import matplotlib.pyplot as plt
-@st.cache
+
 #trying chemy
 engine = create_engine(URL(
     account = 'dl84836.us-east-2.aws',
@@ -24,9 +24,7 @@ st.set_page_config(
 
 # get the distinct year from the database
 
-distinct_year_query = """SELECT DISTINCT DD.D_YEAR FROM 
-STORE_SALES SS INNER JOIN DATE_DIM DD
-ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK;"""
+distinct_year_query = """SELECT DISTINCT DD.D_YEAR FROM DATE_DIM DD;"""
 
 distinct_year = pd.read_sql_query(distinct_year_query, engine)['d_year'].tolist()
 
@@ -35,8 +33,7 @@ year = st.sidebar.selectbox('Year', distinct_year)
 
 # get the distinct year from the database
 
-distinct_month_query = """SELECT DISTINCT DD.D_MOY FROM STORE_SALES SS INNER JOIN DATE_DIM DD
-ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK;"""
+distinct_month_query = """SELECT DISTINCT DD.D_MOY FROM DATE_DIM DD;"""
 
 distinct_month = pd.read_sql_query(distinct_month_query, engine)['d_moy'].tolist()
 
