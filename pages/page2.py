@@ -39,17 +39,16 @@ distinct_month = pd.read_sql_query(distinct_month_query, engine)['d_moy'].tolist
 month = st.selectbox('Year', distinct_month)
 
 
-query="""SELECT DD.D_YEAR, DD.D_MOY, SUM(SS_NET_PAID) 
+query="""SELECT SUM(SS_NET_PAID) 
 FROM 
 STORE_SALES_NEW SS INNER JOIN DATE_DIM DD
 ON
 SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
 WHERE 
-DD.D_YEAR={},
+DD.D_YEAR={} and
 DD.D_MOY={}
-GROUP BY
-DD.D_YEAR,
-DD.D_MOY;""".format(year,month)
+group by 
+DD.D_YEAR, DD.D_MOY""".format(year,month)
 
 df=pd.read_sql_query(query,engine)
 st.write(df)
