@@ -1,7 +1,6 @@
 import streamlit as st
 from st_clickable_images import clickable_images
 
-st.sidebar.header("Plotting Demo")
 clicked = clickable_images(
     [
         "https://images.unsplash.com/photo-1565130838609-c3a86655db61?w=700",
