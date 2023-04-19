@@ -1,17 +1,22 @@
-# Contents of ~/my_app/main_page.py
 import streamlit as st
 
-st.markdown("# Main page 🎈")
-st.sidebar.markdown("# Main page 🎈")
+def page1():
+    st.title('Page 1')
+    st.write('This is the first page of my app.')
 
-# Contents of ~/my_app/pages/page_2.py
-import streamlit as st
+def page2():
+    st.title('Page 2')
+    st.write('This is the second page of my app.')
 
-st.markdown("# Page 2 ❄️")
-st.sidebar.markdown("# Page 2 ❄️")
+# Define a dictionary that maps the user's selection in the sidebar to the corresponding page function
+pages = {
+    "Page 1": page1,
+    "Page 2": page2
+}
 
-# Contents of ~/my_app/pages/page_3.py
-import streamlit as st
+# Create a sidebar menu with radio buttons
+selection = st.sidebar.radio("Go to", list(pages.keys()))
 
-st.markdown("# Page 3 🎉")
-st.sidebar.markdown("# Page 3 🎉")
+# Call the appropriate page function based on the user's selection
+pages[selection]()
+
