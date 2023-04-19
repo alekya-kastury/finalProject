@@ -127,7 +127,7 @@ elif month==1:
     (COUNT(DISTINCT SS_CUSTOMER_SK) - COUNT(DISTINCT CASE WHEN DD.D_YEAR = {} AND DD.D_MOY={} THEN SS_CUSTOMER_SK END)) * 100.0
     / COUNT(DISTINCT SS_CUSTOMER_SK) as returning_customers_percentage
     FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
-    WHERE DD.D_YEAR < {} AND DD.D_MOY<{};""".format(prev_year,prev_month,prev_year,prev_month)
+    WHERE DD.D_YEAR = {} AND DD.D_MOY={};""".format(prev_year,prev_month,prev_year,prev_month)
     #df_ret_cust=pd.read_sql_query(query,engine)
     ret_customers=run_query(query,'returning_customers_percentage')    
 else:
@@ -136,7 +136,7 @@ else:
     (COUNT(DISTINCT SS_CUSTOMER_SK) - COUNT(DISTINCT CASE WHEN DD.D_YEAR = {} AND DD.D_MOY={} THEN SS_CUSTOMER_SK END)) * 100.0
     / COUNT(DISTINCT SS_CUSTOMER_SK) as returning_customers_percentage
     FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
-    WHERE DD.D_YEAR = {} AND DD.D_MOY<{};""".format(year,prev_month,year,prev_month)
+    WHERE DD.D_YEAR = {} AND DD.D_MOY={};""".format(year,prev_month,year,prev_month)
     #df_ret_cust=pd.read_sql_query(query,engine)
     ret_customers=run_query(query,'returning_customers_percentage')      
     
