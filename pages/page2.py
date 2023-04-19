@@ -9,10 +9,7 @@ from snowflake.sqlalchemy import URL
 import matplotlib.pyplot as plt
 
 
-st.set_page_config(page_title="Plotting Demo", page_icon="📈")
 
-st.markdown("# Plotting Demo")
-st.sidebar.header("Plotting Demo")
 
 
 #trying chemy
@@ -30,6 +27,10 @@ st.set_page_config(
     page_icon="👋",
 )
 
+st.set_page_config(page_title="Plotting Demo", page_icon="📈")
+
+st.markdown("# Plotting Demo")
+st.sidebar.header("Plotting Demo")
 st.sidebar.success("Select a demo above.")
 
 st.write ("Welcome")
