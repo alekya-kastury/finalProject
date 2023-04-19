@@ -50,6 +50,7 @@ DD.D_YEAR, DD.D_MOY""".format(year,month)
 
 df=pd.read_sql_query(query,engine)
 #st.write (df)
-st.metric(label="Total Sales per Month", value=df['sales'], delta=None, delta_color="normal", help=None, label_visibility="visible")
+val=df['sales']
+st.metric(label="Total Sales per Month", value=millify(val), delta=None, delta_color="normal", help=None, label_visibility="visible")
 
 
