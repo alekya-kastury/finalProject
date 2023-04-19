@@ -94,9 +94,33 @@ FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON
 SS.SS_SOLD_DATE_SK=DD.D_DATE_SK 
 WHERE DD.D_YEAR={} AND DD.D_MOY={}
 group by DD.D_YEAR, DD.D_MOY;""".format(year,month)
-    
+
 df_no_of_cust=pd.read_sql_query(query,engine)
 no_of_customers=df_no_of_cust['no_of_customers'][0]
+
+if year==1998 and month==1:
+    percentage=100
+elif month==1:
+    prev_year=year-1
+    prev_month=12
+    query="""SELECT count(distinct SS_CUSTOMER_SK) as no_of_customers
+    FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON
+    SS.SS_SOLD_DATE_SK=DD.D_DATE_SK 
+    WHERE DD.D_YEAR={} AND DD.D_MOY={}
+    group by DD.D_YEAR, DD.D_MOY;""".format(prev_year,prev_month)
+    
+else:
+    prev_month=month-1
+    query="""SELECT count(distinct SS_CUSTOMER_SK) as no_of_customers
+    FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON
+    SS.SS_SOLD_DATE_SK=DD.D_DATE_SK 
+    WHERE DD.D_YEAR={} AND DD.D_MOY={}
+    group by DD.D_YEAR, DD.D_MOY;""".format(year,prev_month)
+
+df_no_of_cust_prev=pd.read_sql_query(query,engine)
+no_of_customers_prev=df_no_of_cust_prev['no_of_customers'][0]    
+
+percentage_cust=((no_of_customers-no_of_customers_prev)/no_of_customers_prev)*100
 
 ###########################################################################################
 
@@ -108,7 +132,7 @@ with st.beta_container():
     with col1:
         st.metric(label="Revenue", value=shorten_num(revenue_current),delta=round(percentage,1))
     with col2:
-        st.metric('Number of Customers', shorten_num(no_of_customers))
+        st.metric('Number of Customers', shorten_num(no_of_customers),delta=round(percentage_cust,1))
     with col3:
         st.metric('Repeat Purchase Rate', '300')
     with col4:
