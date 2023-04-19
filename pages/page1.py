@@ -14,7 +14,6 @@ clicked = clickable_images(
     img_style={"margin": "5px", "height": "200px"},
 )
 
-if clicked=="Image #1":
-    st.experimental_set_query_params(page='https://alekya-kastury-finalproject-pagespage2-xmu4hr.streamlit.app/')
 
+st.markdown(f"Image #{clicked} clicked" if clicked > -1 else "No image clicked")
 
