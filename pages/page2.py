@@ -89,11 +89,11 @@ percentage=((revenue_current-revenue_prev)/revenue_prev)*100
 
 
 #################################BLOCK 2##################################################
-query="""SELECT SS_CUSTOMER_SK,count(1) as no_of_customers
+query="""SELECT count(distinct SS_CUSTOMER_SK) as no_of_customers
 FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON
 SS.SS_SOLD_DATE_SK=DD.D_DATE_SK 
 WHERE DD.D_YEAR={} AND DD.D_MOY={}
-group by SS_CUSTOMER_SK;""".format(year,month)
+group by DD.D_YEAR, DD.D_MOY;""".format(year,month)
     
 df_no_of_cust=pd.read_sql_query(query,engine)
 no_of_customers=df_no_of_cust['no_of_customers'][0]
