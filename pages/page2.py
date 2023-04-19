@@ -129,7 +129,7 @@ FROM (
 
 ret_customers=run_query(query,'C')         
 
-query="""SELECT count(SS_CUSTOMER_SK) AS C
+query="""SELECT count(SS_CUSTOMER_SK) AS total
 FROM (
   SELECT SS_CUSTOMER_SK
   FROM STORE_SALES SS INNER JOIN DATE_DIM DD
@@ -137,7 +137,7 @@ FROM (
    WHERE DD.D_YEAR={} and DD.D_MOY={}
 ) S ;""".format(year,month)
 
-total_customers=run_query(query,'C')
+total_customers=run_query(query,'total')
 
 percentage_ret_customers=ret_customers*100/total_customers
 #########################################################################################
