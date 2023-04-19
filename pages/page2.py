@@ -29,3 +29,4 @@ st.write ("Welcome")
 query="""SELECT * FROM CUSTOMER LIMIT 1;"""
 df=pd.read_sql_query(query,engine)
 st.write(df)
+st.button("Re-run")
