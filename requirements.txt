@@ -17,3 +17,4 @@ datetime
 snowflake-connector-python
 snowflake-sqlalchemy
 altair
+st_clickable_images
