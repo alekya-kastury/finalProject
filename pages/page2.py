@@ -134,6 +134,8 @@ elif month==1:
     / COUNT(DISTINCT SS_CUSTOMER_SK) as returning_customers_percentage
     FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
     WHERE DD.D_YEAR = {} AND DD.D_MOY={};""".format(year,month,year,month)
+    df_ret_cust=pd.read_sql_query(query,engine)
+    ret_customers=df_ret_cust['returning_customers_percentage'][0]    
 else:
     prev_month=month-1
     query="""SELECT
@@ -141,10 +143,9 @@ else:
     / COUNT(DISTINCT SS_CUSTOMER_SK) as returning_customers_percentage
     FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
     WHERE DD.D_YEAR = {} AND DD.D_MOY={};""".format(year,month,year,month)
+    df_ret_cust=pd.read_sql_query(query,engine)
+    ret_customers=df_ret_cust['returning_customers_percentage'][0]    
     
-df_ret_cust=pd.read_sql_query(query,engine)
-ret_customers=df_ret_cust['returning_customers_percentage'][0]    
-
 #########################################################################################
 # Create a container for the metrics
 with st.beta_container():
@@ -155,6 +156,6 @@ with st.beta_container():
     with col2:
         st.metric('Number of Customers', shorten_num(no_of_customers),delta=str(round(percentage_cust,1))+'%')
     with col3:
-        st.metric('Returning Customers', str(shorten_num(ret_customers))+'%')
+        st.metric('Returning Customers', shorten_num(ret_customers))
     with col4:
         st.metric('Average Order Value', '300')
