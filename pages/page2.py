@@ -42,10 +42,8 @@ def shorten_num(number):
     return shortened_num
 
 #####################################################BLOCK 1##############################################
-
-query="""SELECT SUM(SS_NET_PAID) as sales FROM 
-STORE_SALES SS INNER JOIN DATE_DIM DD ON
-SS.SS_SOLD_DATE_SK=DD.D_DATE_SKWHERE 
+query="""SELECT SUM(SS_NET_PAID) as sales FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON
+SS.SS_SOLD_DATE_SK=DD.D_DATE_SK WHERE 
 DD.D_YEAR={} and DD.D_MOY={} group by 
 DD.D_YEAR, DD.D_MOY""".format(year,month)
 
