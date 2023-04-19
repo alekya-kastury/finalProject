@@ -45,27 +45,30 @@ DD.D_YEAR, DD.D_MOY""".format(year,month)
 df_rev_current=pd.read_sql_query(query,engine)
 revenue_current=df_rev_current['sales'][0]
 
-query="""SELECT SUM(SS_NET_PAID) as sales
-FROM 
-STORE_SALES SS INNER JOIN DATE_DIM DD
-ON
-SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
-WHERE 
-DD.D_YEAR={} and
-DD.D_MOY={}
-group by 
-DD.D_YEAR, DD.D_MOY""".format(prev_year,prev_month)
-
 
 if year==1998 and month==1:
     percentage=100
 elif month==1:
     prev_year=year-1
     prev_month=12
+    
+    query="""SELECT SUM(SS_NET_PAID) as sales FROM 
+    STORE_SALES SS INNER JOIN DATE_DIM DD
+    ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
+    WHERE DD.D_YEAR={} and DD.D_MOY={}
+    group by DD.D_YEAR, DD.D_MOY""".format(prev_year,prev_month)
+    
     df_rev_prev=pd.read_sql_query(query,engine)
     revenue_prev=df_rev_prev['sales'][0]
 else:
     prev_month=month-1
+    
+    query="""SELECT SUM(SS_NET_PAID) as sales FROM 
+    STORE_SALES SS INNER JOIN DATE_DIM DD
+    ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
+    WHERE DD.D_YEAR={} and DD.D_MOY={}
+    group by DD.D_YEAR, DD.D_MOY""".format(prev_year,prev_month)
+    
     df_rev_prev=pd.read_sql_query(query,engine)
     revenue_prev=df_rev_prev['sales'][0]
 
@@ -94,5 +97,3 @@ with st.beta_container():
         st.metric('Repeat Purchase Rate', '300')
     with col4:
         st.metric('Average Order Value', '300')
-
-
