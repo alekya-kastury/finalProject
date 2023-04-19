@@ -54,6 +54,21 @@ df=pd.read_sql_query(query,engine)
 #st.write (df)
 
 val=df['sales']
-st.metric(label="Total Sales per Month", value=humanize.intword(val), delta=None, delta_color="normal", help=None, label_visibility="visible")
+#st.metric(label="Total Sales per Month", value=humanize.intword(val), delta=None, delta_color="normal", help=None, label_visibility="visible")
 
+# Create a container for the metrics
+with st.beta_container():
+    # Create two columns for the metrics
+    col1, col2, col3 = st.beta_columns(3)
 
+    # Add the first metric to the first column
+    with col1:
+        st.metric(label="Total Sales per Month", value=humanize.intword(val))
+
+    # Add the second metric to the second column
+    with col2:
+        st.metric('Metric 2', '200')
+
+    # Add the third metric to the third column
+    with col3:
+        st.metric('Metric 3', '300')
