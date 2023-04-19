@@ -55,7 +55,7 @@ df=pd.read_sql_query(query,engine)
 
 val=df['sales']
 
-def shortened_num(number):    
+def shorten_num(number):    
     if number >= 1000000000:
         shortened_num = str(round(number/1000000000, 1)) + "B"
     elif number >= 1000000:
