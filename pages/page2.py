@@ -61,7 +61,7 @@ with st.beta_container():
     # Create two columns for the metrics
     col1, col2, col3, col4 = st.beta_columns(4)
     with col1:
-        st.metric(label="Revenue", value=humanize.intword(val, format='%.1f', sep=',', suffix='', symbols=['', 'K', 'M', 'B', 'T', 'Q']))
+        st.metric(label="Revenue", value=humanize.intword(val, format='%.1f', symbols=['', 'K', 'M', 'B', 'T', 'Q']))
     with col2:
         st.metric('New Customers', '200')
     with col3:
