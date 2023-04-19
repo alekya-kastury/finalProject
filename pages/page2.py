@@ -125,7 +125,7 @@ percentage_cust=((no_of_customers-no_of_customers_prev)/no_of_customers_prev)*10
 ###########################################################################################
 ##############################BLOCK 3####################################################
 if year==1998 and month==1:
-    percentage_return_cust=0
+    ret_customers=0
 elif month==1:
     prev_year=year-1
     prev_month=12
