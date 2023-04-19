@@ -48,7 +48,7 @@ DD.D_YEAR={} and DD.D_MOY={} group by
 DD.D_YEAR, DD.D_MOY""".format(year,month)
 
 df_rev_current=pd.read_sql_query(query,engine)
-revenue_current=st.cache(df_rev_current['sales'][0])
+revenue_current=df_rev_current['sales'][0]
 
 if year==1998 and month==1:
     percentage=100
