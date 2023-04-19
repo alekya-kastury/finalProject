@@ -58,8 +58,6 @@ elif month==1:
     WHERE DD.D_YEAR={} and DD.D_MOY={}
     group by DD.D_YEAR, DD.D_MOY""".format(prev_year,prev_month)
     
-    df_rev_prev=pd.read_sql_query(query,engine)
-    revenue_prev=df_rev_prev['sales'][0]
 else:
     prev_month=month-1
     
@@ -67,10 +65,10 @@ else:
     STORE_SALES SS INNER JOIN DATE_DIM DD
     ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
     WHERE DD.D_YEAR={} and DD.D_MOY={}
-    group by DD.D_YEAR, DD.D_MOY""".format(prev_year,prev_month)
+    group by DD.D_YEAR, DD.D_MOY""".format(year,prev_month)
     
-    df_rev_prev=pd.read_sql_query(query,engine)
-    revenue_prev=df_rev_prev['sales'][0]
+df_rev_prev=pd.read_sql_query(query,engine)
+revenue_prev=df_rev_prev['sales'][0]
 
 percentage=((revenue_current-revenue_prev)/revenue_prev)*100
 
