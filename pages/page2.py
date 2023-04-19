@@ -43,48 +43,40 @@ def shorten_num(number):
     return shortened_num
 
 #####################################################BLOCK 1##############################################
-@st.cache
-def block1();
-    query="""SELECT SUM(SS_NET_PAID) as sales
-    FROM 
+
+query="""SELECT SUM(SS_NET_PAID) as sales FROM 
+STORE_SALES SS INNER JOIN DATE_DIM DD ON
+SS.SS_SOLD_DATE_SK=DD.D_DATE_SKWHERE 
+DD.D_YEAR={} and DD.D_MOY={} group by 
+DD.D_YEAR, DD.D_MOY""".format(year,month)
+
+df_rev_current=pd.read_sql_query(query,engine)
+revenue_current=st.cache(df_rev_current['sales'][0])
+
+if year==1998 and month==1:
+    percentage=100
+elif month==1:
+    prev_year=year-1
+    prev_month=12
+    
+    query="""SELECT SUM(SS_NET_PAID) as sales FROM 
     STORE_SALES SS INNER JOIN DATE_DIM DD
-    ON
-    SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
-    WHERE 
-    DD.D_YEAR={} and
-    DD.D_MOY={}
-    group by 
-    DD.D_YEAR, DD.D_MOY""".format(year,month)
-
-    df_rev_current=pd.read_sql_query(query,engine)
-    revenue_current=df_rev_current['sales'][0]
-
-
-    if year==1998 and month==1:
-        percentage=100
-    elif month==1:
-        prev_year=year-1
-        prev_month=12
+    ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
+    WHERE DD.D_YEAR={} and DD.D_MOY={}
+    group by DD.D_YEAR, DD.D_MOY""".format(prev_year,prev_month)
     
-        query="""SELECT SUM(SS_NET_PAID) as sales FROM 
-        STORE_SALES SS INNER JOIN DATE_DIM DD
-        ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
-        WHERE DD.D_YEAR={} and DD.D_MOY={}
-        group by DD.D_YEAR, DD.D_MOY""".format(prev_year,prev_month)
+else:
+    prev_month=month-1
     
-    else:
-        prev_month=month-1
+    query="""SELECT SUM(SS_NET_PAID) as sales FROM 
+    STORE_SALES SS INNER JOIN DATE_DIM DD
+    ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
+    WHERE DD.D_YEAR={} and DD.D_MOY={}
+    group by DD.D_YEAR, DD.D_MOY""".format(year,prev_month)
     
-        query="""SELECT SUM(SS_NET_PAID) as sales FROM 
-        STORE_SALES SS INNER JOIN DATE_DIM DD
-        ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
-        WHERE DD.D_YEAR={} and DD.D_MOY={}
-        group by DD.D_YEAR, DD.D_MOY""".format(year,prev_month)
-    
-    df_rev_prev=pd.read_sql_query(query,engine)
-    revenue_prev=df_rev_prev['sales'][0]
-
-    percentage=((revenue_current-revenue_prev)/revenue_prev)*100
+df_rev_prev=pd.read_sql_query(query,engine)
+revenue_prev=st.cache(df_rev_prev['sales'][0])
+percentage=((revenue_current-revenue_prev)/revenue_prev)*100
 
 
 ###########################################################################################################
