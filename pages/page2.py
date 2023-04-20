@@ -232,4 +232,4 @@ WHERE SS_CUSTOMER_SK IN
 
 total_revenue_men=run_query(query,'revenue_men')
 st.sidebar.markdown('MEN')                     
-st.sidebar.markdown(total_revenue_men)  
+st.sidebar.markdown('$'+str(shorten_num(total_revenue_men)))  
