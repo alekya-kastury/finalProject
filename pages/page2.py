@@ -197,11 +197,8 @@ query="""SELECT dd.d_year as YEAR,COUNT(SS_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS
 FROM STORE_SALES SS INNER JOIN DATE_DIM DD
 ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
 WHERE DD.D_MOY={}
-group by DD.D_YEAR, DD.D_MOY;""".format('month')
+group by DD.D_YEAR, DD.D_MOY LIMIT 2;""".format('month')
 
-@st.cache
-def plot_graph(query):
-    df=pd.read_sql_query(query,engine)
-    st.line_chart(df, x=df["YEAR"][0], y=df["COUNT_OF_CUSTOMERS"][0])
-        
-plot_graph(query)    
+df=pd.read_sql_query(query,engine)
+st.write(df)
+#st.line_chart(df, x=df["YEAR"][0], y=df["COUNT_OF_CUSTOMERS"][0])    
