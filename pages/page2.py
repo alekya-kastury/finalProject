@@ -207,3 +207,4 @@ def run_query_plot(query):
     st.line_chart(df)
 
 run_query_plot(query)
+ 
