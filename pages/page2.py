@@ -202,7 +202,8 @@ group by DD.D_YEAR;""".format(month)
 @st.cache_data
 def run_query_plot(query):
     df=pd.read_sql_query(query,engine)
-    st.line_chart(df,axis=0)
-
+    c = alt.Chart(df).mark_line().encode(x='year', y='count_of_customers')
+    st.altair_chart(c)
+    
 run_query_plot(query)
  
