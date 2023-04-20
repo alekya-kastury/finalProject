@@ -200,7 +200,7 @@ WHERE DD.D_MOY={}
 group by DD.D_YEAR, DD.D_MOY LIMIT 2;""".format(month)
 
 df=pd.read_sql_query(query,engine)
-st.write(df['YEAR'])
+st.write(df)
 
 @st.cache
 def plot_graph(query,x_v,y_v):
