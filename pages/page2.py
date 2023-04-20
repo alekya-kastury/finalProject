@@ -141,13 +141,25 @@ total_customers=run_query(query,'total')
 
 percentage_ret_customers=ret_customers*100/total_customers
 #########################################################################################
+#############################BLOCK 4#####################################################
+
+query="""SELECT count(SS_NET_PAID) as count_sales FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON
+SS.SS_SOLD_DATE_SK=DD.D_DATE_SK WHERE 
+DD.D_YEAR={} and DD.D_MOY={} group by 
+DD.D_YEAR, DD.D_MOY;""".format(year,month)
+
+count_sales=run_query(query,'count_sales')
+average=revenue_current*100 /count_sales
+#########################################################################################
 # Create a container for the metrics
 with st.beta_container():
     # Create two columns for the metrics
-    col1, col2, col3 = st.beta_columns(3)
+    col1, col2, col3,col4 = st.beta_columns(4)
     with col1:
         st.metric(label="Revenue", value=shorten_num(revenue_current),delta=str(round(percentage,1))+'%')
     with col2:
         st.metric('Number of Customers', shorten_num(no_of_customers),delta=str(round(percentage_cust,1))+'%')
     with col3:
         st.metric('Returning customers', str(round(percentage_ret_customers,1))+'%') 
+    with col4:
+        st.metric('Average Order Value',average)
