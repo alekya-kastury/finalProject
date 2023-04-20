@@ -231,4 +231,4 @@ WHERE SS_CUSTOMER_SK IN
 (SELECT DISTINCT CD_DEMO_SK FROM CUSTOMER_DEMOGRAPHICS WHERE CD_GENDER='M');"""
 
 total_revenue_men=run_query(query,'revenue_men')
-st.sidebar('MEN',total_revenue_men)                     
+st.sidebar.markdown('MEN',total_revenue_men)                     
