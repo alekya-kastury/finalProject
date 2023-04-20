@@ -233,3 +233,14 @@ WHERE SS_CUSTOMER_SK IN
 total_revenue_men=run_query(query,'revenue_men')
 st.sidebar.markdown('MEN')                     
 st.sidebar.markdown('$'+str(shorten_num(total_revenue_men)))  
+
+###########################################################################################################################
+query="""SELECT sum(SS_NET_PAID) as REVENUE_MEN FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON SS_SOLD_DATE_SK=D_DATE_SK
+WHERE SS_CUSTOMER_SK IN 
+(SELECT DISTINCT CD_DEMO_SK FROM CUSTOMER_DEMOGRAPHICS WHERE CD_GENDER='F');"""
+
+total_revenue_women=run_query(query,'revenue_women')
+st.sidebar.markdown('WOMEN')                     
+st.sidebar.markdown('$'+str(shorten_num(total_revenue_women)))  
+
+
