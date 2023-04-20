@@ -202,11 +202,10 @@ group by DD.D_YEAR;""".format(month)
 df=pd.read_sql_query(query,engine)
 
 
-#def run_query_plot(query,col1,col2):
+def run_query_plot(query,col1,col2):
+    df=pd.read_sql_query(query,engine)
+    x=df['year']
+    y=df['count_of_customers']
+    st.line_chart(df)
 
-df=pd.read_sql_query(query,engine)
-x=df['year']
-y=df['count_of_customers']
-st.line_chart(df)
-
-#run_query_plot(query,'year','count_of_customer')
+run_query_plot(query,'year','count_of_customer')
