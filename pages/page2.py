@@ -201,7 +201,7 @@ group by DD.D_YEAR;""".format(month)
 
 df=pd.read_sql_query(query,engine)
 
-
+@st.cache
 def run_query_plot(query,col1,col2):
     df=pd.read_sql_query(query,engine)
     x=df['year']
