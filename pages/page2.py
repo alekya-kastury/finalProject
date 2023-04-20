@@ -162,4 +162,4 @@ with st.beta_container():
     with col3:
         st.metric('Returning customers', str(round(percentage_ret_customers,1))+'%') 
     with col4:
-        st.metric('Average Order Value',average)
+        st.metric('Average Order Value',round(average,0))
