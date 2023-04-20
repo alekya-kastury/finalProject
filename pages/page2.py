@@ -8,6 +8,7 @@ from sqlalchemy import create_engine
 from snowflake.sqlalchemy import URL
 import matplotlib.pyplot as plt
 import humanize
+import altair as alt
 
 
 #trying chemy
