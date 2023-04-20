@@ -243,4 +243,14 @@ st.sidebar.markdown('WOMEN')
 st.sidebar.markdown('$'+str(shorten_num(total_revenue_women)))  
 
 ###########################################################################################################################
+query="""SELECT AGE,COUNT(1) AS COUNT FROM (SELECT D_YEAR-C_BIRTH_YEAR AS AGE FROM CUSTOMER C INNER JOIN STORE_SALES SS
+ON C.C_CUSTOMER_SK=SS.SS_CUSTOMER_SK INNER JOIN DATE_DIM DD
+ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK WHERE DD.D_YEAR={} AND DD.D_MOY={})S ;""".format(year,month)
 
+@st.cache_data
+def run_query_1(query):
+    df=pd.read_sql_query(query,engine)
+    return df
+
+age_df=run_query_1(query)
+st.bar_chart(age_df)
