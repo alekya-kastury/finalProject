@@ -162,7 +162,9 @@ elif month==1:
     ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
     WHERE DD.D_YEAR={} and DD.D_MOY={}
     group by DD.D_YEAR, DD.D_MOY""".format(prev_year,prev_month)
-    
+    prev_count=run_query(query,'prev_count_sales')
+    prev_avg=revenue_prev/prev_count
+    percentage_avg_inc=(average-prev_avg)*100/prev_avg    
 else:
     prev_month=month-1
     
@@ -172,10 +174,9 @@ else:
     WHERE DD.D_YEAR={} and DD.D_MOY={}
     group by DD.D_YEAR, DD.D_MOY""".format(year,prev_month)
 
-prev_count=run_query(query,'prev_count_sales')
-prev_avg=revenue_prev/prev_count
-
-percentage_avg_inc=(average-prev_avg)*100/prev_avg
+    prev_count=run_query(query,'prev_count_sales')
+    prev_avg=revenue_prev/prev_count
+    percentage_avg_inc=(average-prev_avg)*100/prev_avg
 
 #########################################################################################
 # Create a container for the metrics
