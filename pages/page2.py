@@ -207,6 +207,6 @@ df=pd.read_sql_query(query,engine)
 df=pd.read_sql_query(query,engine)
 x=df['year']
 y=df['count_of_customers']
-st.line_chart(x,y)
+st.line_chart(df)
 
 #run_query_plot(query,'year','count_of_customer')
