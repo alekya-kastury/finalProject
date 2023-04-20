@@ -149,7 +149,7 @@ DD.D_YEAR={} and DD.D_MOY={} group by
 DD.D_YEAR, DD.D_MOY;""".format(year,month)
 
 count_sales=run_query(query,'count_sales')
-average=revenue_current*100 /count_sales
+average=revenue_current /count_sales
 #########################################################################################
 # Create a container for the metrics
 with st.beta_container():
