@@ -150,6 +150,33 @@ DD.D_YEAR, DD.D_MOY;""".format(year,month)
 
 count_sales=run_query(query,'count_sales')
 average=revenue_current /count_sales
+
+if year==1998 and month==1:
+    percentage_avg_inc=100
+elif month==1:
+    prev_year=year-1
+    prev_month=12
+    
+    query="""SELECT count(SS_NET_PAID) as prev_count_sales FROM 
+    STORE_SALES SS INNER JOIN DATE_DIM DD
+    ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
+    WHERE DD.D_YEAR={} and DD.D_MOY={}
+    group by DD.D_YEAR, DD.D_MOY""".format(prev_year,prev_month)
+    
+else:
+    prev_month=month-1
+    
+    query="""SELECT count(SS_NET_PAID) as prev_count_sales FROM 
+    STORE_SALES SS INNER JOIN DATE_DIM DD
+    ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
+    WHERE DD.D_YEAR={} and DD.D_MOY={}
+    group by DD.D_YEAR, DD.D_MOY""".format(year,prev_month)
+
+prev_count=run_query(query,'prev_count_sales')
+prev_avg=revenue_prev/prev_count
+
+percentage_avg_inc=(average-prev_avg)*100/prev_avg
+
 #########################################################################################
 # Create a container for the metrics
 with st.beta_container():
@@ -160,6 +187,6 @@ with st.beta_container():
     with col2:
         st.metric('Number of Customers', shorten_num(no_of_customers),delta=str(round(percentage_cust,1))+'%')
     with col3:
-        st.metric('Returning customers', str(round(percentage_ret_customers,1))+'%') 
+        st.metric('Returning customers', str(round(percentage_ret_customers,1))+'%',delta=str(round(percentage_avg_inc,1))+'%') 
     with col4:
         st.metric('Average Order Value',round(average,0))
