@@ -191,3 +191,17 @@ with st.beta_container():
         st.metric('Returning customers', str(round(percentage_ret_customers,1))+'%') 
     with col4:
         st.metric('Average Order Value',round(average,0),delta=str(round(percentage_avg_inc,1))+'%')
+
+#######################################################################################################################
+query="""SELECT dd.d_year as YEAR,COUNT(SS_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS
+FROM STORE_SALES SS INNER JOIN DATE_DIM DD
+ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
+WHERE DD.D_MOY={}
+group by DD.D_YEAR, DD.D_MOY;""".format('month')
+
+@st.cache
+def plot_graph(query):
+    df=pd.read_sql_query(query,engine)
+    st.line_chart(df, x="YEAR", y="COUNT_OF_CUSTOMERS")
+        
+plot_graph(query)    
