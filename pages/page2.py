@@ -228,8 +228,7 @@ run_query_plot(query)
 ##########################################################################################################################
 query="""SELECT sum(SS_NET_PAID) as REVENUE_MEN FROM STORE_SALES SS INNER JOIN DATE_DIM DD ON SS_SOLD_DATE_SK=D_DATE_SK
 WHERE SS_CUSTOMER_SK IN 
-(SELECT DISTINCT CD_DEMO_SK FROM CUSTOMER_DEMOGRAPHICS WHERE CD_GENDER='M')""";
+(SELECT DISTINCT CD_DEMO_SK FROM CUSTOMER_DEMOGRAPHICS WHERE CD_GENDER='M')s;"""
 
 total_revenue_men=run_query(query,'revenue_men')
-st.sidebar('MEN')
-st.sidebar(total_revenue_men)                     
+st.sidebar('MEN',total_revenue_men)                     
