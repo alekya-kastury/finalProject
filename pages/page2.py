@@ -202,6 +202,6 @@ group by DD.D_YEAR, DD.D_MOY;""".format('month')
 @st.cache
 def plot_graph(query):
     df=pd.read_sql_query(query,engine)
-    st.line_chart(df, x="YEAR", y="COUNT_OF_CUSTOMERS")
+    st.line_chart(df, x=df["YEAR"][0], y=df["COUNT_OF_CUSTOMERS"][0])
         
 plot_graph(query)    
