@@ -199,7 +199,7 @@ WHERE DD.D_MOY={} group by DD.D_YEAR;""".format(month)
 @st.cache_data
 def run_query_plot(query):
     df=pd.read_sql_query(query,engine)
-    c = alt.Chart(df['YEAR','COUNT_OF_CUSTOMERS'],title='Yearly customer count of a month').mark_line().encode(x='year', y='count_of_customers')
+    c = alt.Chart(df[['YEAR','COUNT_OF_CUSTOMERS']],title='Yearly customer count of a month').mark_line().encode(x='year', y='count_of_customers')
     c = c.properties(width=800, height=400)
     st.bar_chart(c)
  
