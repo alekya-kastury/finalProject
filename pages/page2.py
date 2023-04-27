@@ -259,8 +259,7 @@ def run_query_3(query):
     return df
 
 age_df=run_query_3(query)
-with col3:
-    st.bar_chart(age_df)
+st.bar_chart(age_df)
 #############################################################################################################################
 
 
