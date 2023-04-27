@@ -224,7 +224,7 @@ c2 = c2.properties(width=400, height=400)
 col1, col2, col3 = st.beta_columns(3)
 with col1:
     st.altair_chart(c1)
-    st.markdown("---")  # add vertical spacing with markdown
+    st.markdown("---",unsafe_allow_html=True)  # add vertical spacing with markdown
 
     # apply CSS styles to adjust padding and margin
     st.markdown("""
