@@ -223,7 +223,7 @@ c2 = c2.properties(width=400, height=400)
  
 
 #################################################################################
-tab1, tab2, tab3 = st.tabs(["C1","C2"])
+tab1, tab2 = st.tabs(["C1","C2"])
 
 with tab1:
     st.altair_chart(c2)
