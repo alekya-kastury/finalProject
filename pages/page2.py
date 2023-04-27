@@ -238,7 +238,7 @@ with col1:
     </style>
     """,unsafe_allow_html=True)
 with col2:
-    st.altair_chart(c)
+    st.altair_chart(c1)
     st.markdown("---")  # add vertical spacing with markdown
 
     # apply CSS styles to adjust padding and margin
