@@ -224,7 +224,7 @@ c2 = c2.properties(width=400, height=400)
  
 
 #################################################################################
-container = st.beta_columns()
+container = st.beta_container()
 with container:
     st.altair_chart(c2)
 
