@@ -224,9 +224,34 @@ c2 = c2.properties(width=400, height=400)
 col1, col2, col3 = st.beta_columns(3)
 with col1:
     st.altair_chart(c1)
+    st.markdown("---")  # add vertical spacing with markdown
+
+    # apply CSS styles to adjust padding and margin
+    st.markdown("""
+    <style>
+    .st-cc {
+        padding-top: 16px;
+        padding-bottom: 16px;
+        margin-left: 8px;
+        margin-right: 4px;
+    }
+    </style>
+    """)
 with col2:
     st.altair_chart(c2)
+    st.markdown("---")  # add vertical spacing with markdown
 
+    # apply CSS styles to adjust padding and margin
+    st.markdown("""
+    <style>
+    .st-cc {
+        padding-top: 16px;
+        padding-bottom: 16px;
+        margin-left: 8px;
+        margin-right: 4px;
+    }
+    </style>
+    """)
 
 ##########################################################################################################################
 st.sidebar.title ('Revenue per Demographic') 
