@@ -191,7 +191,7 @@ with st.beta_container():
         st.metric('Average Order Value',round(average,0),delta=str(round(percentage_avg_inc,1))+'%')
 
 #######################################################################################################################
-query="""SELECT CAST(dd.d_year AS INTEGER) as YEAR,COUNT(SS_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS
+query1="""SELECT CAST(dd.d_year AS INTEGER) as YEAR,COUNT(SS_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS
 FROM STORE_SALES SS INNER JOIN DATE_DIM DD
 ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
 WHERE DD.D_MOY={} 
@@ -202,12 +202,11 @@ def run_query_plot_1(query):
     df=pd.read_sql_query(query,engine)
     c = alt.Chart(df,title='Yearly customer count of a month').mark_bar().encode(x=alt.X('year',scale=alt.Scale(type='linear',domain=[1998,2003])), y='count_of_customers')
     c = c.properties(width=1000, height=400)
-    return st.altair_chart(c)
+    st.altair_chart(c)
  
-G1=run_query_plot_1(query)
  
 #########################################################################################################################
-query="""SELECT dd.d_moy as MONTH,COUNT(SS_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS
+query2="""SELECT dd.d_moy as MONTH,COUNT(SS_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS
 FROM STORE_SALES SS INNER JOIN DATE_DIM DD
 ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
 WHERE DD.D_YEAR={}
@@ -218,16 +217,15 @@ def run_query_plot_2(query):
     df=pd.read_sql_query(query,engine)
     c = alt.Chart(df,title='Monthly customer count per year').mark_line().encode(x='month', y='count_of_customers')
     c = c.properties(width=800, height=400)
-    return st.altair_chart(c)
+    st.altair_chart(c)
  
-G2=run_query_plot_2(query)
 
 #################################################################################
 col1, col2 = st.beta_columns(2)
 with col1:
-    st.write('G1')
+    run_query_plot_1(query1)
 with col2:
-    st.write('G2')
+    run_query_plot_1(query2)
 
 
 
