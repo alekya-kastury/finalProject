@@ -197,12 +197,12 @@ ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
 WHERE DD.D_MOY={} 
 group by DD.D_YEAR;""".format(month)
 
-@st.cache_data
-def run_query_plot_1(query):
-    df=pd.read_sql_query(query,engine)
-    c = alt.Chart(df,title='Yearly customer count of a month').mark_bar().encode(x=alt.X('year',scale=alt.Scale(type='linear',domain=[1998,2003])), y='count_of_customers')
-    c = c.properties(width=1000, height=400)
-    return st.altair_chart(c)
+#@st.cache_data
+#def run_query_plot_1(query):
+df=pd.read_sql_query(query,engine)
+c1 = alt.Chart(df,title='Yearly customer count of a month').mark_bar().encode(x=alt.X('year',scale=alt.Scale(type='linear',domain=[1998,2003])), y='count_of_customers')
+c1 = c.properties(width=1000, height=400)
+ 
  
  
 #########################################################################################################################
@@ -212,20 +212,20 @@ ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
 WHERE DD.D_YEAR={}
 group by DD.D_MOY;""".format(year)
 
-@st.cache_data
-def run_query_plot_2(query):
-    df=pd.read_sql_query(query,engine)
-    c = alt.Chart(df,title='Monthly customer count per year').mark_line().encode(x='month', y='count_of_customers')
-    c = c.properties(width=800, height=400)
-    return st.altair_chart(c)
+#@st.cache_data
+#def run_query_plot_2(query):
+df=pd.read_sql_query(query1,engine)
+c2 = alt.Chart(df,title='Monthly customer count per year').mark_line().encode(x='month', y='count_of_customers')
+c2 = c.properties(width=800, height=400)
+
  
 
 #################################################################################
 col1, col2 = st.beta_columns(2)
 with col1:
-    run_query_plot_1(query1)
+    st.altair_chart(c1)
 with col2:
-    run_query_plot_1(query2)
+    st.altair_chart(c2)
 
 
 
