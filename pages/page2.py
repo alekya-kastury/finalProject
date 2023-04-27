@@ -235,8 +235,8 @@ with col1:
     .st-cc {
         padding-top: 1px;
         padding-bottom: 1px;
-        margin-left: 8px;
-        margin-right: 8px;
+        margin-left: 20px;
+        margin-right: 20px;
     }
     </style>
     """,unsafe_allow_html=True)
