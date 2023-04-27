@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import humanize
 import altair as alt
 
-st.set_page_config(page_title="Customer Analysis Dashboard")
+st.set_canvas_width(800)
 
 st.markdown("""
     <style>
@@ -37,7 +37,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-st.title("My App")
+st.title("Customer Analysis Dashboard")
 
 
 #trying chemy
