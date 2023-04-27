@@ -1,7 +1,4 @@
 import streamlit as st
-st.set_page_config(page_title="My Streamlit App", layout="wide")
-
-
 import plotly.graph_objs as go
 import pandas as pd
 import numpy as np
@@ -12,6 +9,8 @@ from snowflake.sqlalchemy import URL
 import matplotlib.pyplot as plt
 import humanize
 import altair as alt
+
+st.set_page_config(page_title="Sales Dashboard", page_icon=":bar_chart:", layout="wide")
 
 st.title("Customer Analysis Dashboard")
 
