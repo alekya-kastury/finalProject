@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import humanize
 import altair as alt
 
-st.set_page_config(page_title="Customer Analysis Dashboard", page_width=800)
+st.set_page_config(page_title="Customer Analysis Dashboard")
 
 st.markdown("""
     <style>
