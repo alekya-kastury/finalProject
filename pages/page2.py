@@ -16,6 +16,25 @@ st.set_page_config(page_title="Customer Analysis Dashboard", page_icon=":bar_cha
 st.title("Customer Analysis Dashboard")
 ######
 
+import streamlit as st
+
+st.markdown(
+    """
+    <style>
+    .shifted {
+        margin-left: 100px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+st.write("This is the first block")
+
+st.write('<div class="shifted">', unsafe_allow_html=True)
+st.write("This is the second block shifted to the right")
+st.write('</div>', unsafe_allow_html=True)
+
 
 #trying chemy
 engine = create_engine(URL(
