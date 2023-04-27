@@ -224,14 +224,24 @@ c2 = c2.properties(width=400, height=400)
  
 
 #################################################################################
-container = st.beta_container()
-with container:
-    st.altair_chart(c2)
+st.markdown(
+    """
+    <style>
+    .shifted {
+        margin-left: 100px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
-with container:
-    st.altair_chart(c1)
+st.altair_chart(c2)
 
-
+st.write('<div class="shifted">', unsafe_allow_html=True)
+st.altair_chart(c1)
+st.write('</div>', unsafe_allow_html=True)
+    
+    
 ##########################################################################################################################
 st.sidebar.title ('Revenue per Demographic') 
 
