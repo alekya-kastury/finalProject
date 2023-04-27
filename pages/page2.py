@@ -224,37 +224,13 @@ c2 = c2.properties(width=400, height=400)
  
 
 #################################################################################
-col1, col2, col3 = st.beta_columns(3)
-with col1:
+container = st.beta_columns()
+with container:
     st.altair_chart(c2)
-    st.markdown("---",unsafe_allow_html=True)  # add vertical spacing with markdown
 
-    # apply CSS styles to adjust padding and margin
-    st.markdown("""
-    <style>
-    .st-cc {
-        padding-top: 1px;
-        padding-bottom: 1px;
-        margin-left: 20px;
-        margin-right: 20px;
-    }
-    </style>
-    """,unsafe_allow_html=True)
-with col2:
+with container:
     st.altair_chart(c1)
-    st.markdown("---")  # add vertical spacing with markdown
 
-    # apply CSS styles to adjust padding and margin
-    st.markdown("""
-    <style>
-    .st-cc {
-        padding-top: 1px;
-        padding-bottom: 1px;
-        margin-left: 8px;
-        margin-right: 20px;
-    }
-    </style>
-    """,unsafe_allow_html=True)
 
 ##########################################################################################################################
 st.sidebar.title ('Revenue per Demographic') 
