@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 import humanize
 import altair as alt
 
-#st.title("Customer Analysis Dashboard")
-#st.set_page_config(page_title="Customer Analysis Dashboard", page_icon=":bar_chart:", layout="wide")
+st.title("Customer Analysis Dashboard")
+st.set_page_config(page_title="Customer Analysis Dashboard", page_icon=":bar_chart:", layout="wide")
 
 ######
 
@@ -26,9 +26,6 @@ engine = create_engine(URL(
     warehouse = 'compute_wh'
 ))
 
-st.set_page_config(
-    page_title="Customer Analysis Dashboard",
-)
 
 # create a dropdown for the year parameter with the distinct state values
 year = st.sidebar.selectbox('Year', [1998,1999,2000,2001,2002])
