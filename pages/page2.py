@@ -194,14 +194,14 @@ with st.beta_container():
 query="""SELECT CAST(dd.d_year AS INTEGER) as YEAR,COUNT(SS_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS
 FROM STORE_SALES SS INNER JOIN DATE_DIM DD
 ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
-WHERE DD.D_MOY={} AND YEAR IN (1998,1999,2000,2001,2002)
+WHERE DD.D_MOY={} 
 group by DD.D_YEAR;""".format(month)
 
 @st.cache_data
 def run_query_plot(query):
     df=pd.read_sql_query(query,engine)
-    c = alt.Chart(df,title='Yearly customer count of a month').mark_point().encode(x='year', y='count_of_customers')
-    c = c.properties(width=800, height=400)
+    c = alt.Chart(df,title='Yearly customer count of a month').mark_point().encode(x=alt.X('year:O', axis=alt.Axis(title='Year', labels=False), scale=alt.Scale(domain=list(x_values['year']))), y='count_of_customers')
+    c = c.properties(width=1000, height=400)
     st.altair_chart(c)
  
 run_query_plot(query)
@@ -216,7 +216,8 @@ group by DD.D_MOY;""".format(year)
 @st.cache_data
 def run_query_plot(query):
     df=pd.read_sql_query(query,engine)
-    c = alt.Chart(df,title='Monthly customer count per year').mark_line().encode(x='month', y='count_of_customers')
+    c = alt.Chart(df,title='Monthly customer count per year').mark_line().encode(x='month', 
+                                                                                 y='count_of_customers')
     c = c.properties(width=800, height=400)
     st.altair_chart(c)
  
