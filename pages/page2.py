@@ -222,6 +222,18 @@ def run_query_plot_2(query):
  
 G2=run_query_plot_2(query)
 
+#################################################################################
+# Create a container for the metrics
+with st.beta_container():
+    # Create two columns for the metrics
+    col1, col2= st.beta_columns(2)
+    with col1:
+        st.write(G1)
+    with col2:
+        st.write(G2)
+
+
+
 ##########################################################################################################################
 st.sidebar.title ('Revenue per Demographic') 
 
@@ -255,14 +267,6 @@ def run_query_3(query):
 age_df=run_query_3(query)
 st.bar_chart(age_df)
 #############################################################################################################################
-# Create a container for the metrics
-with st.beta_container():
-    # Create two columns for the metrics
-    col1, col2= st.beta_columns(2)
-    with col1:
-        st.write(G1)
-    with col2:
-        st.write(G2)
 
 
 
