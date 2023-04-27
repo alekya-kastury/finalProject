@@ -220,8 +220,8 @@ def run_query_plot_2(query):
     c = c.properties(width=800, height=400)
     return st.altair_chart(c)
  
-#run_query_plot_2(query)
-
+G1=run_query_plot_2(query)
+st.write(G1)
 ##########################################################################################################################
 st.sidebar.title ('Revenue per Demographic') 
 
@@ -260,9 +260,9 @@ with st.beta_container():
     # Create two columns for the metrics
     col1, col2= st.beta_columns(2)
     with col1:
-        st.write(run_query_plot_1(query))
+        st.write('G1')
     with col2:
-        st.write(run_query_plot_2(query))
+        st.write('G2')
 
 
 
