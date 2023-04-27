@@ -230,10 +230,10 @@ with col1:
     st.markdown("""
     <style>
     .st-cc {
-        padding-top: 16px;
-        padding-bottom: 16px;
-        margin-left: 20px;
-        margin-right: 20px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        margin-left: 8px;
+        margin-right: 8px;
     }
     </style>
     """,unsafe_allow_html=True)
@@ -245,10 +245,10 @@ with col2:
     st.markdown("""
     <style>
     .st-cc {
-        padding-top: 16px;
-        padding-bottom: 16px;
-        margin-left: 20px;
-        margin-right: 20px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        margin-left: 8px;
+        margin-right: 8px;
     }
     </style>
     """,unsafe_allow_html=True)
