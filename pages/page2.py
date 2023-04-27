@@ -236,7 +236,7 @@ with col1:
         margin-right: 4px;
     }
     </style>
-    """)
+    """,unsafe_allow_html=True)
 with col2:
     st.altair_chart(c2)
     st.markdown("---")  # add vertical spacing with markdown
@@ -251,7 +251,7 @@ with col2:
         margin-right: 4px;
     }
     </style>
-    """)
+    """,unsafe_allow_html=True)
 
 ##########################################################################################################################
 st.sidebar.title ('Revenue per Demographic') 
