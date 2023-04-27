@@ -223,12 +223,8 @@ def run_query_plot_2(query):
 G2=run_query_plot_2(query)
 
 #################################################################################
-# Create a container for the metrics
-col1, col2= st.beta_columns(2)
-with col1:
-    st.write(G1)
-with col2:
-    st.write(G2)
+st.write(G1)
+st.write(G2)
 
 
 
