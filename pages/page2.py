@@ -198,13 +198,13 @@ WHERE DD.D_MOY={}
 group by DD.D_YEAR;""".format(month)
 
 @st.cache_data
-def run_query_plot(query):
+def run_query_plot_1(query):
     df=pd.read_sql_query(query,engine)
     c = alt.Chart(df,title='Yearly customer count of a month').mark_bar().encode(x=alt.X('year',scale=alt.Scale(type='linear',domain=[1998,2003])), y='count_of_customers')
     c = c.properties(width=1000, height=400)
     st.altair_chart(c)
  
-run_query_plot(query)
+run_query_plot_!(query)
  
 #########################################################################################################################
 query="""SELECT dd.d_moy as MONTH,COUNT(SS_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS
@@ -214,14 +214,14 @@ WHERE DD.D_YEAR={}
 group by DD.D_MOY;""".format(year)
 
 @st.cache_data
-def run_query_plot(query):
+def run_query_plot_2(query):
     df=pd.read_sql_query(query,engine)
     c = alt.Chart(df,title='Monthly customer count per year').mark_line().encode(x='month', 
                                                                                  y='count_of_customers')
     c = c.properties(width=800, height=400)
     st.altair_chart(c)
  
-run_query_plot(query)
+run_query_plot_2(query)
 
 ##########################################################################################################################
 st.sidebar.title ('Revenue per Demographic') 
@@ -249,9 +249,25 @@ ON C.C_CUSTOMER_SK=SS.SS_CUSTOMER_SK INNER JOIN DATE_DIM DD
 ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK WHERE DD.D_YEAR={} AND DD.D_MOY={})S group by AGE;""".format(year,month)
 
 @st.cache_data
-def run_query_1(query):
+def run_query_3(query):
     df=pd.read_sql_query(query,engine)
     return df
 
-age_df=run_query_1(query)
+age_df=run_query_3(query)
 st.bar_chart(age_df)
+#############################################################################################################################
+# Create a container for the metrics
+with st.beta_container():
+    # Create two columns for the metrics
+    col1, col2= st.beta_columns(2)
+    with col1:
+        st.write(run_query_plot_1(query))
+    with col2:
+        st.write(run_query_plot_2(query))
+
+
+
+
+
+
+
