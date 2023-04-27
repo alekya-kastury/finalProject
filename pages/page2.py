@@ -204,7 +204,7 @@ def run_query_plot_1(query):
     c = c.properties(width=1000, height=400)
     st.altair_chart(c)
  
-run_query_plot_!(query)
+run_query_plot_1(query)
  
 #########################################################################################################################
 query="""SELECT dd.d_moy as MONTH,COUNT(SS_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS
