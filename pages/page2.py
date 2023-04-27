@@ -194,15 +194,14 @@ with st.beta_container():
 query="""SELECT cast(dd.d_year as int) as YEAR,COUNT(SS_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS
 FROM STORE_SALES SS INNER JOIN DATE_DIM DD
 ON SS.SS_SOLD_DATE_SK=DD.D_DATE_SK
-WHERE DD.D_MOY={}
-group by DD.D_YEAR;""".format(month)
+WHERE DD.D_MOY={};""".format(month)
 
 @st.cache_data
 def run_query_plot(query):
     df=pd.read_sql_query(query,engine)
     c = alt.Chart(df,title='Yearly customer count of a month').mark_line().encode(x='year', y='count_of_customers')
     c = c.properties(width=800, height=400)
-    st.bar_chart(c)
+    st.altair_chart(c)
  
 run_query_plot(query)
  
