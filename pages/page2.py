@@ -1,5 +1,5 @@
 import streamlit as st
-st.set_page_config(page_title="My Streamlit App", page_icon=":smiley:", layout="wide")
+st.set_page_config(page_title="My Streamlit App", layout="wide")
 
 
 import plotly.graph_objs as go
