@@ -10,8 +10,6 @@ import matplotlib.pyplot as plt
 import humanize
 import altair as alt
 
-#st.set_canvas_width(800)
-
 st.markdown("""
     <style>
     body {
