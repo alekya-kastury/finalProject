@@ -203,7 +203,7 @@ group by DD.D_YEAR;""".format(month)
 #def run_query_plot_1(query):
 df=pd.read_sql_query(query1,engine)
 c1 = alt.Chart(df,title='Yearly customer count of a month').mark_bar().encode(x=alt.X('year',scale=alt.Scale(type='linear',domain=[1998,2003])), y='count_of_customers')
-c1 = c1.properties(width=300, height=400)
+c1 = c1.properties(width=800, height=400)
  
  
  
@@ -218,7 +218,7 @@ group by DD.D_MOY;""".format(year)
 #def run_query_plot_2(query):
 df=pd.read_sql_query(query2,engine)
 c2 = alt.Chart(df,title='Monthly customer count per year').mark_line().encode(x='month', y='count_of_customers')
-c2 = c2.properties(width=400, height=400)
+c2 = c2.properties(width=800, height=400)
 
  
 
