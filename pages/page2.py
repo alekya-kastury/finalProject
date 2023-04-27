@@ -14,7 +14,18 @@ import altair as alt
 st.set_page_config(page_title="Customer Analysis Dashboard", page_icon=":bar_chart:", layout="wide")
 
 st.title("Customer Analysis Dashboard")
-######
+#########################################################################################################
+#trying chemy
+engine = create_engine(URL(
+    account = 'dl84836.us-east-2.aws',
+    user = 'alekyakastury',
+    password = '@Noon1240',
+    database = 'CUSTOMER',
+    schema = 'PUBLIC',
+    warehouse = 'compute_wh'
+))
+
+############################################################################################
 
 # create a dropdown for the year parameter with the distinct state values
 year = st.sidebar.selectbox('Year', [1998,1999,2000,2001,2002])
