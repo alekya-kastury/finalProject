@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import humanize
 import altair as alt
 
-st.title("Customer Analysis Dashboard")
+#st.title("Customer Analysis Dashboard")
 st.set_page_config(page_title="Customer Analysis Dashboard", page_icon=":bar_chart:", layout="wide")
 
 ######
