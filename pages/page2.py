@@ -10,31 +10,6 @@ import matplotlib.pyplot as plt
 import humanize
 import altair as alt
 
-st.markdown("""
-    <style>
-    body {
-        font-size: 16px;
-        color: #333333;
-    }
-    h1 {
-        font-size: 36px;
-        color: #0072B2;
-    }
-    h2 {
-        font-size: 24px;
-        color: #0072B2;
-    }
-    h3 {
-        font-size: 20px;
-        color: #0072B2;
-    }
-    p {
-        margin-top: 16px;
-        margin-bottom: 16px;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
 st.title("Customer Analysis Dashboard")
 
 
