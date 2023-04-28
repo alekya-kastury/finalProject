@@ -100,7 +100,7 @@ y_pred=random.predict(X_test)
 
 X_test['customer_status_i']=y_pred
 risky_customers=X_test[X_test['customer_status_i']==1].shape[0]
-retention_rate=X_test[X_test['customer_status_i']==2].shape[0]/X_test['customer_status_i']
+retention_rate=X_test[X_test['customer_status_i']==2].shape[0]/X_test['customer_status_i'].shape[0]
 ###############################################################################
 query=""" SELECT CUSTOMER_STATUS,COUNT(C_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS LIMIT 10000;"""
 df_status=execute_query(query)
