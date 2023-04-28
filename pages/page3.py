@@ -32,6 +32,6 @@ query=""" SELECT CUSTOMER_STATUS,COUNT(C_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS FROM
 
 df=pd.read_sql_query(query,engine)
 
-c1 = alt.Chart(df,title='Active customers').mark_bar().encode(x='customer_status', y='count_of customers')
+c1 = alt.Chart(df,title='Active customers').mark_bar().encode(x='customer_status', y='count_of_customers')
 c1 = c1.properties(width=800, height=400)
 st.altair_chart(c1)
