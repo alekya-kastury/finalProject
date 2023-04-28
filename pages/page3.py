@@ -106,12 +106,6 @@ customer_demo_df['Segment'] = customer_demo_df['age'].astype(str) + '_' + custom
 # create bins for the segment column
 segment_bins = ['50_Male', '50_Female', '51_Male', '51_Female']
 
-# create labels for the bins
-segment_labels = ['Young Male', 'Young Female', 'Old Male', 'Old Female']
-
-# segment customers based on the combined column
-customer_demo_df['Segmented'] = pd.cut(customer_demo_df['Segment'], bins=segment_bins, labels=segment_labels)
-
 risky_customers=X_test[X_test['customer_status_i']==1].shape[0]
 retention_rate=round(X_test[X_test['customer_status_i']==2].shape[0]*100/X_test['customer_status_i'].shape[0],2)
 ###############################################################################
