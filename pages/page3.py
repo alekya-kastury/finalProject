@@ -82,7 +82,7 @@ st.write(df_customer_income.head(3), max_rows=3)
 st.write(df_income_view.head(3), max_rows=3)
 
 #########################################################################################
-X = df_customer_demo.drop(columns=['customer_status_i'])
+X = df_customer_demo.drop(columns=['c_first_name','c_last_name','customer_status_i'])
 y = df_customer_demo['customer_status_i']
 
 # Split data into train and test sets
