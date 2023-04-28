@@ -19,3 +19,6 @@ snowflake-sqlalchemy
 altair
 st-clickable-images==0.0.3
 humanize
+scipy>=0.15.1
+scikit-learn>=0.18
+matplotlib>=1.4.3
