@@ -149,6 +149,8 @@ c1 = alt.Chart(df_status,title='Customers by status').mark_bar().encode(x='custo
 c1 = c1.properties(width=800, height=400)
 st.altair_chart(c1)
 
-c2 = alt.Chart(cust_income_df,title='Churn risk by income').mark_bar().encode(x='income', y='customer_status_i')
-c2 = c2.properties(width=800, height=400)
-st.altair_chart(c2)
+# create a bar chart using Plotly Express
+fig = px.bar(cust_income_df, x='income', y='customer_status_i')
+
+# display the chart using Streamlit
+st.plotly_chart(fig)
