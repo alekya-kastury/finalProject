@@ -13,6 +13,7 @@ import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+import multiprocessing
 
 st.set_page_config(page_title="Customer Churn Forecast", page_icon=":bar_chart:", layout="wide")
 
@@ -39,15 +40,37 @@ c1 = alt.Chart(df,title='Active customers').mark_bar().encode(x='customer_status
 c1 = c1.properties(width=800, height=400)
 st.altair_chart(c1)
 ######################################################################################################
-query="""SELECT * FROM CUSTOMER_DEMO_VIEW;"""
 
-df_customer_demo=pd.read_sql_query(query,engine)
+
+# Define a function to be executed in parallel
+def execute_query(query, engine):
+    df = pd.read_sql_query(query, engine)
+    return df
+
+# Define your SQL queries
+queries = [
+    "SELECT * FROM CUSTOMER_DEMO_VIEW;",
+    "SELECT * FROM CUSTOMER_INCOME;",
+    "SELECT * FROM INCOME_VIEW;"
+]
+
+# Define your database engine
+engine = sqlalchemy.create_engine('your_database_uri')
+
+# Create a pool of worker processes
+pool = multiprocessing.Pool(processes=3)
+
+# Execute the queries in parallel
+results = pool.starmap(execute_query, [(query, engine) for query in queries])
+
+# Unpack the results into separate DataFrames
+df_customer_demo, df_customer_income, df_income_view = results
+
+# Close the database engine
+engine.dispose()
+
+# Output the results
 st.write('C1')
-query="""SELECT * FROM CUSTOMER_INCOME;"""
 
-df_customer_income=pd.read_sql_query(query,engine)
-st.write('C2')
-query="""SELECT * FROM INCOME_VIEW;"""
 
-df_income_view=pd.read_sql_query(query,engine)
-st.write('C3')
+
