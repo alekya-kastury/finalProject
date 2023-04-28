@@ -26,11 +26,15 @@ engine = create_engine(URL(
 ))
 
 #####################################################################################################
-query=""" SELECT CUSTOMER_STATUS,COUNT(C_CUSTOMER_SK) FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS;"""
+query=""" SELECT CUSTOMER_STATUS,COUNT(C_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS;"""
 
 @st.cache_data
 def run_query(query):
     df=pd.read_sql_query(query,engine)
     return df
 
-st.write(run_query(query))
+#st.write(run_query(query))
+
+c1 = alt.Chart(df,title='Active customers').mark_bar().encode(x='COUNT_OF_CUSTOMERS', y='CUSTOMER_STATUS')
+c1 = c1.properties(width=800, height=400)
+st.altair_chart(c1)
