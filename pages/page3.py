@@ -29,8 +29,8 @@ engine = create_engine(URL(
 query="""SELECT 
     C.c_customer_sk,
     CASE 
-        WHEN MAX(D_YEAR)>2002 THEN 'Active'
-        WHEN MAX(D_YEAR)>=2001 AND MAX(D_YEAR)<2002 THEN 'Inactive'
+        WHEN MAX(D_YEAR)=2002 THEN 'Active'
+        WHEN MAX(D_YEAR)=2001 THEN 'Inactive'
         WHEN MAX(D_YEAR)<2001 THEN 'Lost'
     END AS customer_status
 from
