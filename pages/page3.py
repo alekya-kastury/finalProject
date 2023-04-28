@@ -25,5 +25,25 @@ engine = create_engine(URL(
     warehouse = 'compute_wh'
 ))
 
+#####################################################################################################
+query="""SELECT 
+    C.c_customer_sk,
+    CASE 
+        WHEN MAX(D_YEAR)>2002 THEN 'Active'
+        WHEN MAX(D_YEAR)>=2001 AND MAX(D_YEAR)<2002 THEN 'Inactive'
+        WHEN MAX(D_YEAR)<2001 THEN 'Lost'
+    END AS customer_status
+from
+CUSTOMER C INNER JOIN STORE_SALES SS 
+ON C.C_CUSTOMER_SK=SS.SS_CUSTOMER_SK
+INNER JOIN DATE_DIM DD 
+ON C.C_LAST_REVIEW_DATE=DD.D_DATE_SK 
+group by c_customer_sk
+limit 1;"""
 
+@st.cache_data
+def run_query(query,col):
+    df=pd.read_sql_query(query,engine)
+    return df
 
+run_query(query)
