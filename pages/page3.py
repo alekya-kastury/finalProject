@@ -57,9 +57,9 @@ def execute_query(query):
 
 # Define your SQL queries
 queries = [
-    """SELECT * FROM CUSTOMER_DEMO_VIEW LIMIT 1;""",
-    """SELECT * FROM CUSTOMER_INCOME LIMIT 1;""",
-    """SELECT * FROM INCOME_VIEW LIMIT 1;"""
+    """SELECT * FROM CUSTOMER_DEMO_VIEW LIMIT 10000;""",
+    """SELECT * FROM CUSTOMER_INCOME LIMIT 10000;""",
+    """SELECT * FROM INCOME_VIEW LIMIT 10000;"""
 ]
 
 
