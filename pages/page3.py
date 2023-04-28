@@ -79,7 +79,7 @@ from sklearn import preprocessing
 label_encoder = preprocessing.LabelEncoder() 
 
 label_encoder.fit_transform(uber_dataset['id']) 
-df_customer_demo['cd_gender]=label_encoder.fit_transform(df_customer_demo['cd_gender'])
+df_customer_demo['cd_gender']=label_encoder.fit_transform(df_customer_demo['cd_gender'])
 df_customer_demo['cd_education_status']=label_encoder.fit_transform(df_customer_demo['cd_education_status'])
 df_customer_demo['cd_credit_rating']=label_encoder.fit_transform(df_customer_demo['cd_credit_rating'])
 df_customer_demo['cd_marital_status']=label_encoder.fit_transform(df_customer_demo['cd_marital_status'])
