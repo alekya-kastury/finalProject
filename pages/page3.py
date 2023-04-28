@@ -43,6 +43,7 @@ st.altair_chart(c1)
 
 
 # Define a function to be executed in parallel
+@st.cache_data
 def execute_query(query, engine):
     df = pd.read_sql_query(query, engine)
     return df
