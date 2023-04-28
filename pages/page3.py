@@ -101,7 +101,7 @@ y_pred=random.predict(X_test)
 X_test['customer_status_i']=y_pred
 customer_demo_df=X_test
 # combine 3 columns into 1 column
-customer_demo_df['Segment'] = customer_demo_df['age'].astype(str) + '_' + df['cd_gender']
+customer_demo_df['Segment'] = customer_demo_df['age'].astype(str) + '_' + customer_demo_df['cd_gender']
 
 # create bins for the segment column
 segment_bins = ['50_Male', '50_Female', '51_Male', '51_Female']
