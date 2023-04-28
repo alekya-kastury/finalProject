@@ -46,4 +46,4 @@ def run_query(query):
     df=pd.read_sql_query(query,engine)
     return df
 
-run_query(query)
+st.write(run_query(query))
