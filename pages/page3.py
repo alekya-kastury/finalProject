@@ -35,16 +35,6 @@ engine = create_engine(URL(
 #####################################################################################################
 query=""" SELECT CUSTOMER_STATUS,COUNT(C_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS LIMIT 10000;"""
 
-#@st.cache_data
-
-df=pd.read_sql_query(query,engine)
-
-c1 = alt.Chart(df,title='Active customers').mark_bar().encode(x='customer_status', y='count_of_customers')
-c1 = c1.properties(width=800, height=400)
-st.altair_chart(c1)
-######################################################################################################
-
-
 # Define a function to be executed in parallel
 @st.cache_data
 def execute_query(query):
@@ -57,6 +47,13 @@ def execute_query(query):
     warehouse = 'compute_wh'))
     df = pd.read_sql_query(query, engine)
     return df
+
+df=execute_query(query)
+
+c1 = alt.Chart(df,title='Active customers').mark_bar().encode(x='customer_status', y='count_of_customers')
+c1 = c1.properties(width=800, height=400)
+st.altair_chart(c1)
+######################################################################################################
 
 # Define your SQL queries
 queries = [
