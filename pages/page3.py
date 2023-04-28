@@ -125,7 +125,7 @@ y_pred=random.predict(X_test)
 
 X_test['customer_status_i']=y_pred
 
-average_icome=X_test[X_test['customer_status_i']==2]['income'].mean()
+average_income=X_test[X_test['customer_status_i']==2]['income'].mean()
 
 ############################################## Dashboard #############################################3
 # Create a container for the metrics
@@ -135,7 +135,7 @@ with st.beta_container():
     with col1:
         st.metric(label="Risky Customers", value=risky_customers)
     with col2:
-        st.metric('Income of Risky Customers', )
+        st.metric('Income of Risky Customers', average_income)
     with col3:
         st.metric('Retention Rate', 85)
 
