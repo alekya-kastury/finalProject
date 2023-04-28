@@ -44,7 +44,14 @@ st.altair_chart(c1)
 
 # Define a function to be executed in parallel
 @st.cache_data
-def execute_query(query, engine):
+def execute_query(query):
+    engine = create_engine(URL(
+    account = 'dl84836.us-east-2.aws',
+    user = 'alekyakastury',
+    password = '@Noon1240',
+    database = 'CUSTOMER',
+    schema = 'PUBLIC',
+    warehouse = 'compute_wh'))
     df = pd.read_sql_query(query, engine)
     return df
 
@@ -60,7 +67,7 @@ queries = [
 pool = multiprocessing.Pool(processes=3)
 
 # Execute the queries in parallel
-results = pool.map(execute_query, [(query, engine) for query in queries])
+results = pool.map(execute_query, [(query) for query in queries])
 
 # Unpack the results into separate DataFrames
 df_customer_demo, df_customer_income, df_income_view = results
