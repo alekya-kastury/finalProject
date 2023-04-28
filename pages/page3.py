@@ -175,7 +175,7 @@ ax.set_title('Value Counts of Income')
 st.pyplot(fig)
 
 # group the DataFrame by the 'Segmented' and 'Status' columns and count the number of customers in each group
-segment_status_counts = customer_demo_df.groupby(['Segmented', 'Status']).size().reset_index(name='Count')
+segment_status_counts = customer_demo_df.groupby(['Segment', 'Status']).size().reset_index(name='Count')
 
 # pivot the DataFrame to create a stacked bar chart
 segment_status_pivot = segment_status_counts.pivot(index='Segmented', columns='Status', values='Count')
