@@ -26,7 +26,7 @@ engine = create_engine(URL(
 ))
 
 #####################################################################################################
-query=""" SELECT COUNT(C_CUSTOMER_SK) FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS;"""
+query=""" SELECT CUSTOMER_STATUS,COUNT(C_CUSTOMER_SK) FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS;"""
 
 @st.cache_data
 def run_query(query):
