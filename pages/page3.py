@@ -94,5 +94,5 @@ y_pred = logreg_model.predict(X_test)
 
 # Assume y_true and y_pred are the true and predicted labels, respectively
 #f1 = f1_score(y_true, y_pred)
-
+ 
 st.write("f1")
