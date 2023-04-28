@@ -103,7 +103,7 @@ customer_demo_df=X_test
 # combine 3 columns into 1 column
 
 # replace 'Male' with 1 and 'Female' with 0 in the 'Gender' column
-customer_demo_df['cd_gender'] = customer_demo_df['cd_gender'].replace({'Male': 1, 'Female': 0})
+customer_demo_df['cd_gender'] = customer_demo_df['cd_gender'].replace({1:'Male',0:'Female'})
 
 customer_demo_df['Segment'] = customer_demo_df['age'].astype(str) + '_' + customer_demo_df['cd_gender'].astype(str)
 
