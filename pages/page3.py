@@ -99,6 +99,7 @@ print('Random_forest_score :',random.score(X_test, y_test))
 y_pred=random.predict(X_test)
 
 X_test['customer_status_i']=y_pred
+customer_demo_df=X_test
 risky_customers=X_test[X_test['customer_status_i']==1].shape[0]
 retention_rate=round(X_test[X_test['customer_status_i']==2].shape[0]*100/X_test['customer_status_i'].shape[0],2)
 ###############################################################################
@@ -149,11 +150,6 @@ c1 = alt.Chart(df_status,title='Customers by status').mark_bar().encode(x='custo
 c1 = c1.properties(width=800, height=400)
 st.altair_chart(c1)
 
-# create a bar chart using Plotly Express
-fig = px.bar(cust_income_df, x='income', y='customer_status_i')
-
-
-
 # create a bar chart of the value counts of income in X_test
 fig, ax = plt.subplots()
 cust_income_df.income.value_counts().plot(kind='bar', ax=ax)
@@ -165,4 +161,5 @@ ax.set_title('Value Counts of Income in X_test')
 
 # display the chart on Streamlit
 st.pyplot(fig)
+
 
