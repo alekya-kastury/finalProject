@@ -105,7 +105,9 @@ risky_customers=X_test[X_test['customer_status_i']==2].shape[0]
 #st.write(risky_customers)
 
 # Create a container for the metrics
-st.metric(label='Risky Customers',value=risky_customers)
+with st.beta_container(1):
+    with col1:
+        st.metric(label='Risky Customers',value=risky_customers)
 
         
 
