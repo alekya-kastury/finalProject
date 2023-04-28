@@ -42,12 +42,12 @@ st.altair_chart(c1)
 query="""SELECT * FROM CUSTOMER_DEMO_VIEW;"""
 
 df_customer_demo=pd.read_sql_query(query,engine)
-
+st.write('C1')
 query="""SELECT * FROM CUSTOMER_INCOME;"""
 
 df_customer_income=pd.read_sql_query(query,engine)
-
+st.write('C2')
 query="""SELECT * FROM INCOMER_VIEW;"""
 
 df_income_view=pd.read_sql_query(query,engine)
-
+st.write('C3')
