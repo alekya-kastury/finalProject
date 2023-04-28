@@ -99,7 +99,8 @@ print('Random_forest_score :',random.score(X_test, y_test))
 y_pred=random.predict(X_test)
 
 X_test['customer_status_i']=y_pred
-risky_customers=X_test[X_test['customer_status_i']==2].shape[0]
+risky_customers=X_test[X_test['customer_status_i']==1].shape[0]
+retention_rate=X_test[X_test['customer_status_i']==2].shape[0]/X_test['customer_status_i']
 ###############################################################################
 query=""" SELECT CUSTOMER_STATUS,COUNT(C_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS LIMIT 10000;"""
 df_status=execute_query(query)
@@ -126,10 +127,11 @@ y_pred=random.predict(X_test)
 X_test['customer_status_i']=y_pred
 
 # filter the DataFrame based on a condition
-filtered_df = X_test.loc[X_test['customer_status_i'] == 2]
+filtered_df = X_test.loc[X_test['customer_status_i'] == 0]
 
 # calculate the mean of column 'B' in the filtered DataFrame
 mean_b = filtered_df['income'].mean()
+
 
 ############################################## Dashboard #############################################3
 # Create a container for the metrics
@@ -141,7 +143,7 @@ with st.beta_container():
     with col2:
         st.metric('Income of Risky Customers', mean_b)
     with col3:
-        st.metric('Retention Rate', 85)
+        st.metric('Retention Rate', retention_rate)
 
 c1 = alt.Chart(df_status,title='Active customers').mark_bar().encode(x='customer_status', y='count_of_customers')
 c1 = c1.properties(width=800, height=400)
