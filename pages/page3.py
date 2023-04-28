@@ -33,7 +33,6 @@ engine = create_engine(URL(
 ))
 
 #####################################################################################################
-query=""" SELECT CUSTOMER_STATUS,COUNT(C_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS LIMIT 10000;"""
 
 # Define a function to be executed in parallel
 @st.cache_data
@@ -48,10 +47,6 @@ def execute_query(query):
     df = pd.read_sql_query(query, engine)
     return df
 
-df=execute_query(query)
-c1 = alt.Chart(df,title='Active customers').mark_bar().encode(x='customer_status', y='count_of_customers')
-c1 = c1.properties(width=800, height=400)
-st.altair_chart(c1)
 
 ######################################################################################################
 # Define your SQL queries
@@ -108,3 +103,23 @@ X_test['customer_status_i']=y_pred
 ###############################################################################
 risky_customers=X_test[X_test['customer_status_i']==2].shape[0]
 st.write(risky_customers)
+
+# Create a container for the metrics
+with st.beta_container():
+    # Create two columns for the metrics
+    col1, col2, col3 = st.beta_columns(3)
+    with col1:
+        st.metric(label="Risky Customers", risky_customers)
+    with col2:
+        st.metric('Income of Risky Customers')
+    with col3:
+        st.metric('Retention rate') 
+        
+        
+
+query=""" SELECT CUSTOMER_STATUS,COUNT(C_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS LIMIT 10000;"""
+df=execute_query(query)
+c1 = alt.Chart(df,title='Active customers').mark_bar().encode(x='customer_status', y='count_of_customers')
+c1 = c1.properties(width=800, height=400)
+st.altair_chart(c1)
+
