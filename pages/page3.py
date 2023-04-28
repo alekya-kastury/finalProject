@@ -150,5 +150,5 @@ c1 = c1.properties(width=800, height=400)
 st.altair_chart(c1)
 
 c2 = alt.Chart(cust_income_df,title='Churn risk by income').mark_bar().encode(x='income', y='customer_status_i')
-c2 = c1.properties(width=800, height=400)
+c2 = c2.properties(width=800, height=400)
 st.altair_chart(c2)
