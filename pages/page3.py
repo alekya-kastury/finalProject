@@ -99,26 +99,48 @@ print('Random_forest_score :',random.score(X_test, y_test))
 y_pred=random.predict(X_test)
 
 X_test['customer_status_i']=y_pred
-
-###############################################################################
 risky_customers=X_test[X_test['customer_status_i']==2].shape[0]
-#st.write(risky_customers)
+###############################################################################
+query=""" SELECT CUSTOMER_STATUS,COUNT(C_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS LIMIT 10000;"""
+df_status=execute_query(query)
 
-# Create a container for the metrics
+################################# CUSTOMER INCOME #################################################3
+
+query="""SELECT * FROM CUSTOMER_INCOME;"""
+df_customer_income=execute_query(query)
+
+X = df_customer_income.drop(columns=['c_customer_sk','customer_status_i'], axis = 1)
+y = df_customer_income['customer_status_i']
+
+from imblearn.over_sampling import SMOTE
+smote = SMOTE()
+X_resampled, y_resampled = smote.fit_resample(X,y)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42)
+
+random = RandomForestClassifier(n_estimators = 200, max_depth=100, random_state = 0) 
+random.fit(X_train , y_train) 
+
+y_pred=random.predict(X_test)
+
+X_test['customer_status_i']=y_pred
+
+average_icome=X_test[X_test['customer_status_i']==2]['income'].mean()
+
+############################################## Dashboard #############################################3
 # Create a container for the metrics
 with st.beta_container():
     # Create two columns for the metrics
-    col1, col2 = st.beta_columns(2)
+    col1, col2, col3 = st.beta_columns(3)
     with col1:
         st.metric(label="Risky Customers", value=risky_customers)
     with col2:
-        st.metric('Number of Customers', 2)
+        st.metric('Income of Risky Customers', )
+    with col3:
+        st.metric('Retention Rate', 85)
 
-        
-
-query=""" SELECT CUSTOMER_STATUS,COUNT(C_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS LIMIT 10000;"""
-df=execute_query(query)
-c1 = alt.Chart(df,title='Active customers').mark_bar().encode(x='customer_status', y='count_of_customers')
+c1 = alt.Chart(df_status,title='Active customers').mark_bar().encode(x='customer_status', y='count_of_customers')
 c1 = c1.properties(width=800, height=400)
 st.altair_chart(c1)
+
 
