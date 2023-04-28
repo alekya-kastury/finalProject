@@ -72,8 +72,22 @@ st.write(df_customer_income.head(3), max_rows=3)
 st.write(df_income_view.head(3), max_rows=3)
 
 #########################################################################################
+# Import label encoder 
+from sklearn import preprocessing 
+  
+# label_encoder object knows how to understand word labels. 
+label_encoder = preprocessing.LabelEncoder() 
+
+label_encoder.fit_transform(uber_dataset['id']) 
+df_customer_demo['cd_gender]=label_encoder.fit_transform(df_customer_demo['cd_gender'])
+df_customer_demo['cd_education_status']=label_encoder.fit_transform(df_customer_demo['cd_education_status'])
+df_customer_demo['cd_credit_rating']=label_encoder.fit_transform(df_customer_demo['cd_credit_rating'])
+df_customer_demo['cd_marital_status']=label_encoder.fit_transform(df_customer_demo['cd_marital_status'])
+
+
 X = df_customer_demo.drop(columns=['c_first_name','c_last_name','customer_status_i'])
 y = df_customer_demo['customer_status_i']
+
 
 # Split data into train and test sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=42)
