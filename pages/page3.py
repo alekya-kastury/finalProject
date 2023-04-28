@@ -49,12 +49,11 @@ def execute_query(query):
     return df
 
 df=execute_query(query)
-
 c1 = alt.Chart(df,title='Active customers').mark_bar().encode(x='customer_status', y='count_of_customers')
 c1 = c1.properties(width=800, height=400)
 st.altair_chart(c1)
-######################################################################################################
 
+######################################################################################################
 # Define your SQL queries
 query =  """SELECT * FROM CUSTOMER_DEMO_VIEW;"""
 df_customer_demo=execute_query(query)
@@ -64,41 +63,48 @@ df_customer_income=execute_query(query)
 
 query= """SELECT * FROM INCOME_VIEW;"""
 df_income_view=execute_query(query)
-
-# Output the results
-st.write('C1')
-st.write(df_customer_demo.head(3), max_rows=3)
-st.write(df_customer_income.head(3), max_rows=3)
-st.write(df_income_view.head(3), max_rows=3)
-
 #########################################################################################
+#### Data Preparation
+df_customer_demo=df_customer_demo.dropna()
+#########################################################################################
+###### Label encoding
+
 # Import label encoder 
 from sklearn import preprocessing 
   
 # label_encoder object knows how to understand word labels. 
-label_encoder = preprocessing.LabelEncoder() 
+label_encoder = preprocessing.LabelEncoder()
 
-df_customer_demo['cd_gender']=label_encoder.fit_transform(df_customer_demo['cd_gender'])
-df_customer_demo['cd_education_status']=label_encoder.fit_transform(df_customer_demo['cd_education_status'])
-df_customer_demo['cd_credit_rating']=label_encoder.fit_transform(df_customer_demo['cd_credit_rating'])
-df_customer_demo['cd_marital_status']=label_encoder.fit_transform(df_customer_demo['cd_marital_status'])
+df_customer_demo['cd_gender']= label_encoder.fit_transform(df_customer_demo['cd_gender'])
+df_customer_demo['cd_education_status']= label_encoder.fit_transform(df_customer_demo['cd_education_status'])
+df_customer_demo['cd_credit_rating']= label_encoder.fit_transform(df_customer_demo['cd_credit_rating'])
+df_customer_demo['cd_marital_status']= label_encoder.fit_transform(df_customer_demo['cd_marital_status'])
 
+###############################################################################3
 
-X = df_customer_demo.drop(columns=['c_first_name','c_last_name','customer_status_i'])
+X = df_customer_demo.drop(columns=['c_first_name','c_last_name','customer_status_i'], axis = 1)
 y = df_customer_demo['customer_status_i']
 
+from imblearn.over_sampling import SMOTE
+smote = SMOTE()
+X_resampled, y_resampled = smote.fit_resample(X,y)
 
-# Split data into train and test sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5, random_state=42)
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
-# Fit logistic regression model
-logreg_model = LogisticRegression()
-logreg_model.fit(X_train, y_train)
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 
-# Make predictions
-y_pred = logreg_model.predict(X_test)
+X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, test_size = 0.2, random_state = 42)
 
-# Assume y_true and y_pred are the true and predicted labels, respectively
-#f1 = f1_score(y_true, y_pred)
- 
-st.write("f1")
+random = RandomForestClassifier(n_estimators = 200, max_depth=200, random_state = 0) 
+random.fit(X_train , y_train) 
+print('Random_forest_score :',random.score(X_test, y_test))
+
+y_pred=random.predict(X_test)
+
+X_test['customer_status_i']=y_pred
+
+###############################################################################
+risky_customers=X_test[X_test['customer_status_i']==2].value_counts()
+st.write(risky_customers)
