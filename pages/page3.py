@@ -14,6 +14,9 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 import multiprocessing
+from sklearn.linear_model import LogisticRegression
+
+
 
 st.set_page_config(page_title="Customer Churn Forecast", page_icon=":bar_chart:", layout="wide")
 
@@ -72,8 +75,13 @@ results = pool.map(execute_query, [(query) for query in queries])
 # Unpack the results into separate DataFrames
 df_customer_demo, df_customer_income, df_income_view = results
 
+
+
 # Output the results
 st.write('C1')
+st.write(df_customer_demo.head(3), max_rows=3)
+st.write(df_customer_income.head(3), max_rows=3)
+st.write(df_income_view.head(3), max_rows=3)
 
 
 
