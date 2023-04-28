@@ -59,7 +59,7 @@ queries = [
 pool = multiprocessing.Pool(processes=3)
 
 # Execute the queries in parallel
-results = pool.starmap(execute_query, [(query, engine) for query in queries])
+results = pool.map(execute_query, [(query, engine) for query in queries])
 
 # Unpack the results into separate DataFrames
 df_customer_demo, df_customer_income, df_income_view = results
