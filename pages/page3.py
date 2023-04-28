@@ -56,21 +56,14 @@ st.altair_chart(c1)
 ######################################################################################################
 
 # Define your SQL queries
-queries = [
-    """SELECT * FROM CUSTOMER_DEMO_VIEW LIMIT 10000;""",
-    """SELECT * FROM CUSTOMER_INCOME LIMIT 10000;""",
-    """SELECT * FROM INCOME_VIEW LIMIT 10000;"""
-]
+query =  """SELECT * FROM CUSTOMER_DEMO_VIEW;"""
+df_customer_demo=execute_query(query)
 
+query="""SELECT * FROM CUSTOMER_INCOME;"""
+df_customer_income=execute_query(query)
 
-# Create a pool of worker processes
-pool = multiprocessing.Pool(processes=3)
-
-# Execute the queries in parallel
-results = pool.map(execute_query, [(query) for query in queries])
-
-# Unpack the results into separate DataFrames
-df_customer_demo, df_customer_income, df_income_view = results
+query= """SELECT * FROM INCOME_VIEW;"""
+df_income_view=execute_query(query)
 
 # Output the results
 st.write('C1')
