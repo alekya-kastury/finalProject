@@ -26,20 +26,7 @@ engine = create_engine(URL(
 ))
 
 #####################################################################################################
-query="""SELECT 
-    C.c_customer_sk,
-    CASE 
-        WHEN MAX(D_YEAR)=2002 THEN 'Active'
-        WHEN MAX(D_YEAR)=2001 THEN 'Inactive'
-        WHEN MAX(D_YEAR)<2001 THEN 'Lost'
-    END AS customer_status
-from
-CUSTOMER C INNER JOIN STORE_SALES SS 
-ON C.C_CUSTOMER_SK=SS.SS_CUSTOMER_SK
-INNER JOIN DATE_DIM DD 
-ON C.C_LAST_REVIEW_DATE=DD.D_DATE_SK 
-group by c_customer_sk
-limit 10000;"""
+query=""" SELECT COUNT(C_CUSTOMER_SK) FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS;"""
 
 @st.cache_data
 def run_query(query):
