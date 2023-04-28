@@ -39,7 +39,7 @@ ON C.C_CUSTOMER_SK=SS.SS_CUSTOMER_SK
 INNER JOIN DATE_DIM DD 
 ON C.C_LAST_REVIEW_DATE=DD.D_DATE_SK 
 group by c_customer_sk
-limit 1;"""
+limit 10;"""
 
 @st.cache_data
 def run_query(query):
