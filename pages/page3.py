@@ -107,14 +107,10 @@ risky_customers=X_test[X_test['customer_status_i']==2].shape[0]
 # Create a container for the metrics
 with st.beta_container():
     # Create two columns for the metrics
-    col1, col2, col3 = st.beta_columns(3)
+    col1 = st.beta_columns(1)
     with col1:
-        st.metric(label='Risky Customers')
-    with col2:
-        st.metric('Income of Risky Customers')
-    with col3:
-        st.metric('Retention rate') 
-        
+        st.metric(label='Risky Customers',value=risky_customers)
+
         
 
 query=""" SELECT CUSTOMER_STATUS,COUNT(C_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS LIMIT 10000;"""
