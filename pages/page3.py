@@ -16,7 +16,7 @@ from sklearn.metrics import accuracy_score
 import multiprocessing
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import f1_score
-
+import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="Customer Churn Forecast", page_icon=":bar_chart:", layout="wide")
 
@@ -152,5 +152,17 @@ st.altair_chart(c1)
 # create a bar chart using Plotly Express
 fig = px.bar(cust_income_df, x='income', y='customer_status_i')
 
-# display the chart using Streamlit
-st.plotly_chart(fig)
+
+
+# create a bar chart of the value counts of income in X_test
+fig, ax = plt.subplots()
+cust_income_df.income.value_counts().plot(kind='bar', ax=ax)
+
+# add labels and title
+ax.set_xlabel('Income')
+ax.set_ylabel('Count')
+ax.set_title('Value Counts of Income in X_test')
+
+# display the chart on Streamlit
+st.pyplot(fig)
+
