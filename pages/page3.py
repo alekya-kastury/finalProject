@@ -125,7 +125,11 @@ y_pred=random.predict(X_test)
 
 X_test['customer_status_i']=y_pred
 
-average_income=X_test[X_test['customer_status_i']==2]['income'].mean()
+# filter the DataFrame based on a condition
+filtered_df = X_test.loc[X_test['customer_status_i'] == 2]
+
+# calculate the mean of column 'B' in the filtered DataFrame
+mean_b = filtered_df['income'].mean()
 
 ############################################## Dashboard #############################################3
 # Create a container for the metrics
@@ -135,7 +139,7 @@ with st.beta_container():
     with col1:
         st.metric(label="Risky Customers", value=risky_customers)
     with col2:
-        st.metric('Income of Risky Customers', average_income)
+        st.metric('Income of Risky Customers', mean_b)
     with col3:
         st.metric('Retention Rate', 85)
 
