@@ -125,7 +125,7 @@ random.fit(X_train , y_train)
 y_pred=random.predict(X_test)
 
 X_test['customer_status_i']=y_pred
-
+cust_income_df=X_test
 # filter the DataFrame based on a condition
 filtered_df = X_test.loc[X_test['customer_status_i'] == 0]
 
@@ -143,10 +143,12 @@ with st.beta_container():
     with col2:
         st.metric('Income of Risky Customers', mean_b)
     with col3:
-        st.metric('Retention Rate', retention_rate)
+        st.metric('Retention Rate', str(retention_rate)+'%')
 
-c1 = alt.Chart(df_status,title='Active customers').mark_bar().encode(x='customer_status', y='count_of_customers')
+c1 = alt.Chart(df_status,title='Customers by status').mark_bar().encode(x='customer_status', y='count_of_customers')
 c1 = c1.properties(width=800, height=400)
 st.altair_chart(c1)
 
-
+c2 = alt.Chart(cust_income_df,title='Churn risk by income').mark_bar().encode(x='income', y='customer_status_i')
+c2 = c1.properties(width=800, height=400)
+st.altair_chart(c2)
