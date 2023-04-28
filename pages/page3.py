@@ -108,7 +108,7 @@ risky_customers=X_test[X_test['customer_status_i']==2].shape[0]
 with st.beta_container():
     col1=st.beta_columns(1)
     with col1:
-        st.metric(label='Risky Customers',value=risky_customers)
+        st.metric('Risky Customers')
 
         
 
