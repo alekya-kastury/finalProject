@@ -112,7 +112,7 @@ with st.beta_container():
     with col1:
         st.metric(label="Risky Customers", value=risky_customers)
     with col2:
-        st.metric('Number of Customers', 2')
+        st.metric('Number of Customers', 2)
 
         
 
