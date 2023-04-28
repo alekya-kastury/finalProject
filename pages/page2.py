@@ -223,7 +223,7 @@ c2 = c2.properties(width=800, height=400)
  
 
 #################################################################################
-tab1, tab2 = st.tabs(["C1","C2"])
+tab1, tab2 = st.tabs(["Monthly Customer Count per Year","Customer count analysis of the Month"])
 
 with tab1:
     st.altair_chart(c2)
