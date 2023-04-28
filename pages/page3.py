@@ -33,7 +33,7 @@ def run_query(query):
     df=pd.read_sql_query(query,engine)
     return df
 
-#st.write(run_query(query))
+run_query(query)
 
 c1 = alt.Chart(df,title='Active customers').mark_bar().encode(x='COUNT_OF_CUSTOMERS', y='CUSTOMER_STATUS')
 c1 = c1.properties(width=800, height=400)
