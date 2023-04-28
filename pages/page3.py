@@ -43,7 +43,7 @@ limit 10;"""
 
 query="""select count(*) from 
 STORE_SALES C INNER JOIN DATE_DIM DD ON C.SS_SOLD_DATE_SK=DD.D_DATE_SK
-where D_YEAR =2002 and D_MOY IN (1,2,3);"""
+where D_YEAR =2002 and D_MOY IN (1,2,3,4);"""
 
 @st.cache_data
 def run_query(query):
