@@ -39,15 +39,15 @@ c1 = alt.Chart(df,title='Active customers').mark_bar().encode(x='customer_status
 c1 = c1.properties(width=800, height=400)
 st.altair_chart(c1)
 ######################################################################################################
-query="""SELECT * FROM CUSTOMER_DEMO_VIEW LIMIT 1;"""
+query="""SELECT * FROM CUSTOMER_DEMO_VIEW;"""
 
 df_customer_demo=pd.read_sql_query(query,engine)
 st.write('C1')
-query="""SELECT * FROM CUSTOMER_INCOME LIMIT 1;"""
+query="""SELECT * FROM CUSTOMER_INCOME;"""
 
 df_customer_income=pd.read_sql_query(query,engine)
 st.write('C2')
-query="""SELECT * FROM INCOMER_VIEW LIMIT 1;"""
+query="""SELECT * FROM INCOME_VIEW;"""
 
 df_income_view=pd.read_sql_query(query,engine)
 st.write('C3')
