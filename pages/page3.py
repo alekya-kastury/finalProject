@@ -82,7 +82,7 @@ df_customer_demo['cd_marital_status']= label_encoder.fit_transform(df_customer_d
 
 ###############################################################################3
 
-X = df_customer_demo.drop(columns=['c_first_name','c_last_name','customer_status_i'], axis = 1)
+X = df_customer_demo.drop(columns=['c_customer_sk','c_first_name','c_last_name','customer_status_i'], axis = 1)
 y = df_customer_demo['customer_status_i']
 
 from imblearn.over_sampling import SMOTE
@@ -106,5 +106,5 @@ y_pred=random.predict(X_test)
 X_test['customer_status_i']=y_pred
 
 ###############################################################################
-risky_customers=X_test[X_test['customer_status_i']==2].value_counts()
+risky_customers=X_test[X_test['customer_status_i']==2].shape[0]
 st.write(risky_customers)
