@@ -42,7 +42,7 @@ group by c_customer_sk
 limit 1;"""
 
 @st.cache_data
-def run_query(query,col):
+def run_query(query):
     df=pd.read_sql_query(query,engine)
     return df
 
