@@ -28,9 +28,9 @@ engine = create_engine(URL(
 #####################################################################################################
 query=""" SELECT CUSTOMER_STATUS,COUNT(C_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS;"""
 
-@st.cache_data
-def run_query(query):
-    df=pd.read_sql_query(query,engine)
+#@st.cache_data
+
+df=pd.read_sql_query(query,engine)
 
 run_query(query)
 
