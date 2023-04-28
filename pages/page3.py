@@ -49,13 +49,11 @@ def execute_query(query, engine):
 
 # Define your SQL queries
 queries = [
-    "SELECT * FROM CUSTOMER_DEMO_VIEW;",
-    "SELECT * FROM CUSTOMER_INCOME;",
-    "SELECT * FROM INCOME_VIEW;"
+    """SELECT * FROM CUSTOMER_DEMO_VIEW;""",
+    """SELECT * FROM CUSTOMER_INCOME;""",
+    """SELECT * FROM INCOME_VIEW;"""
 ]
 
-# Define your database engine
-engine = sqlalchemy.create_engine('your_database_uri')
 
 # Create a pool of worker processes
 pool = multiprocessing.Pool(processes=3)
@@ -65,9 +63,6 @@ results = pool.starmap(execute_query, [(query, engine) for query in queries])
 
 # Unpack the results into separate DataFrames
 df_customer_demo, df_customer_income, df_income_view = results
-
-# Close the database engine
-engine.dispose()
 
 # Output the results
 st.write('C1')
