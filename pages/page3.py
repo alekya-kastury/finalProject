@@ -30,12 +30,12 @@ st.title("Customer Churn Forecast")
 #########################################################################################################
 #trying chemy
 engine = create_engine(URL(
-    account = 'dl84836.us-east-2.aws',
-    user = 'alekyakastury',
-    password = '@Noon1240',
-    database = 'CUSTOMER',
-    schema = 'PUBLIC',
-    warehouse = 'compute_wh'
+    account = st.secrets["account"],
+    user = st.secrets["user"],
+    password = st.secrets["password"],
+    database = st.secrets["database"],
+    schema = st.secrets["schema"],
+    warehouse = st.secrets["warehouse"]
 ))
 
 #####################################################################################################
@@ -91,20 +91,18 @@ y = df_customer_demo['customer_status_i']
 
 from imblearn.over_sampling import SMOTE
 smote = SMOTE()
-X_resampled, y_resampled = smote.fit_resample(X,y)
 
+@st.cache_data
+def run_model():
+    XX_resampled, y_resampled = smote.fit_resample(X,y)
+    XX_train, XX_test, y_train, y_test = train_test_split(XX_resampled, y_resampled, test_size = 0.2, random_state = 42)
+    random = RandomForestClassifier(n_estimators = 200, max_depth=200, random_state = 0) 
+    random.fit(XX_train , y_train) 
+    y_pred=random.predict(XX_test)
+    XX_test['customer_status_i']=y_pred
+    return XX_test
 
-X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, test_size = 0.2, random_state = 42)
-
-random = RandomForestClassifier(n_estimators = 200, max_depth=200, random_state = 0) 
-random.fit(X_train , y_train) 
-print('Random_forest_score :',random.score(X_test, y_test))
-
-y_pred=random.predict(X_test)
-
-X_test['customer_status_i']=y_pred
-customer_demo_df=X_test
-# combine 3 columns into 1 column
+customer_demo_df=run_model()
 
 # replace 'Male' with 1 and 'Female' with 0 in the 'Gender' column
 customer_demo_df['cd_gender'] = customer_demo_df['cd_gender'].replace({1:'Male',0:'Female'})
@@ -123,13 +121,10 @@ customer_demo_df['Segmented']=customer_demo_df['Segment'].map(segment_labels)
 # segment customers based on the combined column
 #customer_demo_df['Segmented'] = pd.cut(customer_demo_df['Segment'], bins=segment_bins, labels=segment_labels)
 
-risky_customers=X_test[X_test['customer_status_i']==1].shape[0]
-retention_rate=round(X_test[X_test['customer_status_i']==2].shape[0]*100/X_test['customer_status_i'].shape[0],2)
-############################################################################3
-
-
+risky_customers=customer_demo_df[customer_demo_df['customer_status_i']==1].shape[0]
+retention_rate=round(customer_demo_df[customer_demo_df['customer_status_i']==2].shape[0]*100/customer_demo_df['customer_status_i'].shape[0],2)
 ###############################################################################
-query4=""" SELECT CUSTOMER_STATUS,COUNT(C_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS LIMIT;"""
+query4=""" SELECT CUSTOMER_STATUS,COUNT(C_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS;"""
 
 @st.cache_data
 def exec_status(query):
@@ -143,31 +138,34 @@ query5="""SELECT * FROM CUSTOMER_INCOME;"""
 def exec_cust_inc(query):
     df_customer_income=pd.read_sql_query(query, engine)
     return df_customer_income
+
 df_customer_income=exec_cust_inc(query5)
 
-X = df_customer_income.drop(columns=['c_customer_sk','customer_status_i'], axis = 1)
-y = df_customer_income['customer_status_i']
+@st.cache_data
+def run_model1():
+    X = df_customer_income.drop(columns=['c_customer_sk','customer_status_i'], axis = 1)
+    y = df_customer_income['customer_status_i']
 
-from imblearn.over_sampling import SMOTE
-smote = SMOTE()
-X_resampled, y_resampled = smote.fit_resample(X,y)
+    smote = SMOTE()
+    X_resampled, y_resampled = smote.fit_resample(X,y)
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42)
 
-random = RandomForestClassifier(n_estimators = 200, max_depth=100, random_state = 0) 
-random.fit(X_train , y_train) 
+    random = RandomForestClassifier(n_estimators = 200, max_depth=100, random_state = 0) 
+    random.fit(X_train , y_train) 
 
-y_pred=random.predict(X_test)
+    y_pred=random.predict(X_test)
 
-X_test['customer_status_i']=y_pred
-cust_income_df=X_test
+    X_test['customer_status_i']=y_pred
+    return X_test
+
+X_test=run_model1()
 # filter the DataFrame based on a condition
 filtered_df = X_test.loc[X_test['customer_status_i'] == 0]
 
 # calculate the mean of column 'B' in the filtered DataFrame
 mean_b = filtered_df['income'].mean()
-
-#########################################################################
+#############################################################
 # Create a container for the metrics
 with st.beta_container():
     # Create two columns for the metrics
@@ -178,7 +176,6 @@ with st.beta_container():
         st.metric('Income of Risky Customers', mean_b)
     with col3:
         st.metric('Retention Rate', str(retention_rate)+'%')
-
 ############################################ PRODUCT ANALYSIS #######################################
 
 query6= """SELECT * FROM PRODUCT_VIEW;"""
@@ -189,30 +186,35 @@ def exec_product(query):
     return df_product_view
 df_product_view =exec_product(query6)
 df_product_view=df_product_view.dropna()
-count_threshold = 1000
-df_filtered = df_product_view[df_product_view['i_class'].map(df_product_view['i_class'].value_counts()) >= count_threshold]
+@st.cache_data
+def run_model2():
+    count_threshold = 1000
+    df_filtered = df_product_view[df_product_view['i_class'].map(df_product_view['i_class'].value_counts()) >= count_threshold]
 # Filter the top 10 products based on their frequency
-top_10_products = df_filtered['i_item_id'].value_counts().nlargest(10)
+#top_10_products = df_filtered['i_item_id'].value_counts().nlargest(10)
 
-df_filtered['cd_gender']= label_encoder.fit_transform(df_filtered['cd_gender'])
-df_filtered['cd_credit_rating']= label_encoder.fit_transform(df_filtered['cd_credit_rating'])
-df_filtered['cd_marital_status']= label_encoder.fit_transform(df_filtered['cd_marital_status'])
-df_filtered['cd_education_status']= label_encoder.fit_transform(df_filtered['cd_education_status'])
-df_filtered['i_class']= label_encoder.fit_transform(df_filtered['i_class'])
-df_product=df_filtered[['age','cd_gender','cd_education_status','cd_credit_rating','cd_marital_status','cd_purchase_estimate','i_class']]
-X = df_product.drop(columns=['i_class'], axis = 1)
-y = df_product['i_class']
-X_resampled, y_resampled = smote.fit_resample(X,y)
+    df_filtered['cd_gender']= label_encoder.fit_transform(df_filtered['cd_gender'])
+    df_filtered['cd_credit_rating']= label_encoder.fit_transform(df_filtered['cd_credit_rating'])
+    df_filtered['cd_marital_status']= label_encoder.fit_transform(df_filtered['cd_marital_status'])
+    df_filtered['cd_education_status']= label_encoder.fit_transform(df_filtered['cd_education_status'])
+    df_filtered['i_class']= label_encoder.fit_transform(df_filtered['i_class'])
+    df_product=df_filtered[['age','cd_gender','cd_education_status','cd_credit_rating','cd_marital_status','cd_purchase_estimate','i_class']]
 
-X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, test_size = 0.2, random_state = 42)
-random = RandomForestClassifier(n_estimators = 200, max_depth=100, random_state = 0) 
-random.fit(X_train , y_train) 
-y_pred=random.predict(X_test)
+    X = df_product.drop(columns=['i_class'], axis = 1)
+    y = df_product['i_class']
+    X_resampled, y_resampled = smote.fit_resample(X,y)
+    
+    X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, test_size = 0.2, random_state = 42)
+    random = RandomForestClassifier(n_estimators = 200, max_depth=100, random_state = 0) 
+    random.fit(X_train , y_train) 
+    y_pred=random.predict(X_test)
 
-X_test['i_class']=y_pred
-cust_product_df=X_test
+    X_test['i_class']=y_pred
+    return X_test
 
-cust_product_df['i_class'].unique()
+cust_product_df=run_model2()
+
+#cust_product_df['i_class'].unique()
 
 i_class={0:'accessories',
 1:'athletic',
@@ -254,6 +256,8 @@ def segment_score(segment_df, category):
 scored_df = pd.concat([segment_score(cust_product_df, category) for category in cust_product_df['category'].unique()])
 
 ############################################## Dashboard #############################################3
+
+
 c1 = alt.Chart(df_status,title='Customers by status').mark_bar().encode(x='customer_status', y='count_of_customers')
 c1 = c1.properties(width=800, height=400)
 
