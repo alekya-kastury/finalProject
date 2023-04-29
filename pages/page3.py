@@ -277,6 +277,6 @@ with tab1:
 
 with tab2:
     st.write('Product Category Score for each :')
-    st.write(scored_df[['cd_gender','age','category','score']].unique())
+    st.write(scored_df[['cd_gender','age','category','score']])
 
     
