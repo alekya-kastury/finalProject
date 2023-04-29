@@ -270,38 +270,12 @@ segment_status_pivot = segment_status_counts.pivot(index='customer_status_i', co
 
 
 
-tab1, tab2,tab3,tab4 = st.tabs(["Customers by Status","Income Distribution","Segmentwise Customer Activity","Product Category Score"])
+tab1, tab2 = st.tabs(["Customers by Status","Product Category Score"])
 
 with tab1:
     st.altair_chart(c1)
 
-with tab2:   
-    # create a bar chart of the value counts of income in X_test
-    fig, ax = plt.subplots()
-    cust_income_df.income.value_counts().plot(kind='bar', ax=ax)
-
-    # add labels and title
-    ax.set_xlabel('Income')
-    ax.set_ylabel('Count')
-    ax.set_title('Value Counts of Income')
-
-    # display the chart on Streamlit
-    st.pyplot(fig)
-with tab3:
-    # plot the stacked bar chart
-    fig, ax = plt.subplots()
-    segment_status_pivot.plot(kind='bar', stacked=True, ax=ax)
-
-    # set the plot title and axis labels
-    plt.title('Customer Status by Segment')
-    plt.xlabel('Segment')
-    plt.ylabel('Number of Customers')
-
-    # display the plot on Streamlit
-    fig.set_size_inches(10, 10)
-    st.pyplot(fig)
-    
-with tab4:
+with tab2:
     st.write('Product Category Score for each :')
     st.write(scored_df[['cd_gender','age','category','score']].unique())
 
