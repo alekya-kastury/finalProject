@@ -125,6 +125,9 @@ customer_demo_df['Segmented']=customer_demo_df['Segment'].map(segment_labels)
 
 risky_customers=X_test[X_test['customer_status_i']==1].shape[0]
 retention_rate=round(X_test[X_test['customer_status_i']==2].shape[0]*100/X_test['customer_status_i'].shape[0],2)
+############################################################################3
+
+
 ###############################################################################
 query4=""" SELECT CUSTOMER_STATUS,COUNT(C_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS LIMIT 5000;"""
 
@@ -163,6 +166,18 @@ filtered_df = X_test.loc[X_test['customer_status_i'] == 0]
 
 # calculate the mean of column 'B' in the filtered DataFrame
 mean_b = filtered_df['income'].mean()
+
+#########################################################################
+# Create a container for the metrics
+with st.beta_container():
+    # Create two columns for the metrics
+    col1, col2, col3 = st.beta_columns(3)
+    with col1:
+        st.metric(label="Risky Customers", value=risky_customers)
+    with col2:
+        st.metric('Income of Risky Customers', mean_b)
+    with col3:
+        st.metric('Retention Rate', str(retention_rate)+'%')
 
 ############################################ PRODUCT ANALYSIS #######################################
 
@@ -239,17 +254,6 @@ def segment_score(segment_df, category):
 scored_df = pd.concat([segment_score(cust_product_df, category) for category in cust_product_df['category'].unique()])
 
 ############################################## Dashboard #############################################3
-# Create a container for the metrics
-with st.beta_container():
-    # Create two columns for the metrics
-    col1, col2, col3 = st.beta_columns(3)
-    with col1:
-        st.metric(label="Risky Customers", value=risky_customers)
-    with col2:
-        st.metric('Income of Risky Customers', mean_b)
-    with col3:
-        st.metric('Retention Rate', str(retention_rate)+'%')
-
 c1 = alt.Chart(df_status,title='Customers by status').mark_bar().encode(x='customer_status', y='count_of_customers')
 c1 = c1.properties(width=800, height=400)
 
