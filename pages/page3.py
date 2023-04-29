@@ -49,21 +49,21 @@ def execute_query(query):
 
 ######################################################################################################
 # Define your SQL queries
-query1 =  """SELECT * FROM CUSTOMER_DEMO_VIEW LIMIT 5000;"""
+query1 =  """SELECT * FROM CUSTOMER_DEMO_VIEW;"""
 @st.cache_data
 def exec_cust_demo(query):
     df_customer_demo=pd.read_sql_query(query, engine)
     return df_customer_demo
 df_customer_demo=exec_cust_demo(query1)
 
-query2="""SELECT * FROM CUSTOMER_INCOME LIMIT 5000;"""
+query2="""SELECT * FROM CUSTOMER_INCOME;"""
 @st.cache_data
 def exec_cust_income(query):
     df_customer_income=pd.read_sql_query(query, engine)
     return df_customer_income
 df_customer_income=exec_cust_income(query2)
 
-query3= """SELECT * FROM INCOME_VIEW LIMIT 5000;"""
+query3= """SELECT * FROM INCOME_VIEW;"""
 @st.cache_data
 def exec_cust_income_view(query):
     df_income_view=pd.read_sql_query(query, engine)
@@ -166,7 +166,7 @@ mean_b = filtered_df['income'].mean()
 
 ############################################ PRODUCT ANALYSIS #######################################
 
-query6= """SELECT * FROM PRODUCT_VIEW LIMIT 5000;"""
+query6= """SELECT * FROM PRODUCT_VIEW;"""
 
 @st.cache_data
 def exec_product(query):
