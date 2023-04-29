@@ -30,12 +30,12 @@ st.title("Customer Churn Forecast")
 #########################################################################################################
 #trying chemy
 engine = create_engine(URL(
-    account = 'dl84836.us-east-2.aws',
-    user = 'alekyakastury',
-    password = '@Noon1240',
-    database = 'CUSTOMER',
-    schema = 'PUBLIC',
-    warehouse = 'compute_wh'
+    user= st.secrets["user"],
+    password= st.secrets["password"],
+    account= st.secrets["account"],
+    warehouse= st.secrets["warehouse"],
+    database= st.secrets["database"],
+    schema= st.secrets["schema"]
 ))
 
 #####################################################################################################
