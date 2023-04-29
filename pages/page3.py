@@ -279,6 +279,6 @@ with tab2:
     st.write('Product Category Score for each :')
     st.write(scored_df[['cd_gender','age','category','score']])
 with tab3:
-    st.write ("Status 0: Active 1: inactive 2: Lost")
+    st.write ("The Status 0 represents Active customer, Status 1 represents inactive customers and Status 2 represents Lost customers")
     st.write(segment_status_pivot)
     
