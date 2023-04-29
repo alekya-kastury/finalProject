@@ -270,7 +270,7 @@ segment_status_pivot = segment_status_counts.pivot(index='customer_status_i', co
 
 
 
-tab1, tab2 = st.tabs(["Customers by Status","Product Category Score"])
+tab1, tab2,tab3= st.tabs(["Customers by Status","Product Category Score","Segmentwise Status"])
 
 with tab1:
     st.altair_chart(c1)
@@ -278,5 +278,6 @@ with tab1:
 with tab2:
     st.write('Product Category Score for each :')
     st.write(scored_df[['cd_gender','age','category','score']])
-
+with tab3:
+    st.write(segment_status_pivot)
     
