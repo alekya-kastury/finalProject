@@ -129,7 +129,7 @@ retention_rate=round(X_test[X_test['customer_status_i']==2].shape[0]*100/X_test[
 
 
 ###############################################################################
-query4=""" SELECT CUSTOMER_STATUS,COUNT(C_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS LIMIT 5000;"""
+query4=""" SELECT CUSTOMER_STATUS,COUNT(C_CUSTOMER_SK) AS COUNT_OF_CUSTOMERS FROM ACTIVE_CUSTOMERS GROUP BY CUSTOMER_STATUS LIMIT;"""
 
 @st.cache_data
 def exec_status(query):
